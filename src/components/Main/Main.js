@@ -99,7 +99,7 @@ function Main() {
                             </div>
                             <ul className="student-info__list list">
                                 <li>
-                                    <a href="#" className="student-info__link link">Facebook</a>
+                                    <a href="https://ru-ru.facebook.com/" className="student-info__link link">Facebook</a>
                                 </li>
                                 <li>
                                     <a href="https://github.com/MgKraynova" className="student-info__link link">Github</a>

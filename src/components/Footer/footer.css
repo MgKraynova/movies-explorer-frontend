@@ -1,0 +1,51 @@
+.footer {
+    padding: 59px 70px 20px 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+}
+
+.footer__text {
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+    text-align: center;
+    color: #A0A0A0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.footer__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.footer__year {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+    color: #000000;
+    margin: 0;
+}
+
+.footer__list {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.footer__link {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+    text-align: right;
+    color: #000000;
+}
