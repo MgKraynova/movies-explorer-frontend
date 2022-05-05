@@ -6,6 +6,14 @@
     padding-bottom: 100px;
 }
 
+@media screen and (max-width: 769px) {
+    .student-info {
+        padding-top: 90px;
+        padding-bottom: 90px;
+        /*todo*/
+    }
+}
+
 .student-info__content {
     display: flex;
     flex-direction: row;
@@ -24,10 +32,23 @@
     gap: 26px;
 }
 
+@media screen and (max-width: 769px) {
+    .student-info__main-info {
+        gap: 20px;
+        max-width: 355px;
+    }
+}
+
 .student-info__wrapper {
     display: flex;
     flex-direction: column;
     gap: 18px;
+}
+
+@media screen and (max-width: 769px) {
+    .student-info__wrapper {
+        gap: 16px;
+    }
 }
 
 .student-info__subtitle {
@@ -41,6 +62,14 @@
     color: #000000;
 }
 
+@media screen and (max-width: 900px) {
+    .student-info__subtitle {
+        font-size: 40px;
+        line-height: 40px;
+        /* identical to box height, or 100% */
+    }
+}
+
 .student-info__caption {
     margin: 0;
     font-style: normal;
@@ -50,6 +79,14 @@
     /* identical to box height, or 111% */
     color: #000000;
     mix-blend-mode: normal;
+}
+
+@media screen and (max-width: 900px) {
+    .student-info__caption {
+        font-size: 12px;
+        line-height: 18px;
+        /* identical to box height, or 150% */
+    }
 }
 
 .student-info__description {
@@ -62,6 +99,15 @@
     mix-blend-mode: normal;
     margin: 0;
     max-width: 590px;
+}
+
+@media screen and (max-width: 900px) {
+    .student-info__description {
+        font-size: 12px;
+        line-height: 18px;
+        /* or 150% */
+        max-width: 364px;
+    }
 }
 
 .student-info__list {
@@ -86,4 +132,11 @@
     border-radius: 10px;
     /*display: block;*/
     object-fit: cover;
+}
+
+@media screen and (max-width: 900px) {
+    .student-info__img {
+        width: 255px;
+        height: 307px;
+    }
 }

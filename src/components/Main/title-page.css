@@ -7,6 +7,23 @@
     gap: 102px;
 }
 
+@media screen and (max-width: 900px) {
+    .title-page {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .title-page {
+        padding-top: 300px;
+        padding-bottom: 70px;
+        padding-right: 44px;
+        padding-left: 44px;
+        gap: 140px;
+    }
+}
+
 .title-page__title {
     font-style: normal;
     font-weight: 400;
@@ -19,9 +36,22 @@
     max-width: 600px;
 }
 
+@media screen and (max-width: 900px) {
+    .title-page__title {
+        text-align: center;
+    }
+}
+
 .title-page__logo {
     width: 722px;
     height: 244px;
     opacity: 0.7;
     align-self: end;
+}
+
+@media screen and (max-width: 900px) {
+    .title-page__logo {
+        width: 680px;
+        height: 230px;
+    }
 }

@@ -5,6 +5,12 @@
     padding-bottom: 125px;
 }
 
+@media screen and (max-width: 769px) {
+    .portfolio {
+        padding-bottom: 90px;
+    }
+}
+
 .portfolio__title {
     font-style: normal;
     font-weight: 400;
@@ -41,6 +47,10 @@
     color: #000000;
 }
 
-.portfolio__icon {
-    outline: 1px solid red;
+@media screen and (max-width: 769px) {
+    .portfolio__link {
+        font-size: 28px;
+        line-height: 50px;
+        /* identical to box height, or 179% */
+    }
 }

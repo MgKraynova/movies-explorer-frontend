@@ -3,9 +3,22 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 1140px;
-    max-width: 1140px;
+    /*width: 100%;*/
     padding: 18px 70px;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 900px) {
+    .header {
+        padding: 18px 40px;
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .header {
+        max-width: 768px;
+        padding: 18px 30px;
+    }
 }
 
 .header_background_dark-blue {

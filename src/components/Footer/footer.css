@@ -5,6 +5,12 @@
     gap: 19px;
 }
 
+@media screen and (max-width: 769px) {
+    .footer {
+        padding: 59px 30px 20px 30px;
+    }
+}
+
 .footer__text {
     margin: 0;
     font-style: normal;
