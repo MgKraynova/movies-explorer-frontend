@@ -80,11 +80,11 @@
     }
 }
 
-/*@media screen and (max-width: 700px) {*/
-/*    .about-project__text-container  {*/
-/*        width: unset;*/
-/*    }*/
-/*}*/
+@media screen and (max-width: 700px) {
+    .about-project__text-container  {
+        width: unset;
+    }
+}
 
 @media screen and (max-width: 426px) {
     .about-project__text-container  {
