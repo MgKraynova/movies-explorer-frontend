@@ -99,10 +99,10 @@ function Main() {
                             </div>
                             <ul className="student-info__list list">
                                 <li>
-                                    <a href="https://ru-ru.facebook.com/" className="student-info__link link">Facebook</a>
+                                    <a target="_blank" href="https://ru-ru.facebook.com/" className="student-info__link link">Facebook</a>
                                 </li>
                                 <li>
-                                    <a href="https://github.com/MgKraynova" className="student-info__link link">Github</a>
+                                    <a target="_blank" href="https://github.com/MgKraynova" className="student-info__link link">Github</a>
                                 </li>
                             </ul>
                         </div>
@@ -113,20 +113,20 @@ function Main() {
                     <h2 className="portfolio__title">Портфолио</h2>
                     <ul className="portfolio__list list">
                         <li className="portfolio__item">
-                            <a className="portfolio__link link" href="https://github.com/MgKraynova/how-to-learn">Статичный сайт</a>
-                            <a className="link" href="https://github.com/MgKraynova/how-to-learn">
+                            <a target="_blank" className="portfolio__link link" href="https://github.com/MgKraynova/how-to-learn">Статичный сайт</a>
+                            <a target="_blank" className="link" href="https://github.com/MgKraynova/how-to-learn">
                                 <img className="portfolio__icon" src={portfolioIcon} alt="Изображение стрелки" />
                             </a>
                         </li>
                         <li className="portfolio__item">
-                            <a className="portfolio__link link" href="https://github.com/MgKraynova/russian-travel">Адаптивный сайт</a>
-                            <a className="link" href="https://github.com/MgKraynova/russian-travel">
+                            <a target="_blank" className="portfolio__link link" href="https://github.com/MgKraynova/russian-travel">Адаптивный сайт</a>
+                            <a target="_blank" className="link" href="https://github.com/MgKraynova/russian-travel">
                                 <img className="portfolio__icon" src={portfolioIcon} alt="Изображение стрелки" />
                             </a>
                         </li>
                         <li className="portfolio__item">
-                            <a className="portfolio__link link" href="https://github.com/MgKraynova/react-mesto-api-full">Одностраничное приложение</a>
-                            <a className="link" href="https://github.com/MgKraynova/react-mesto-api-full">
+                            <a target="_blank" className="portfolio__link link" href="https://github.com/MgKraynova/react-mesto-api-full">Одностраничное приложение</a>
+                            <a target="_blank" className="link" href="https://github.com/MgKraynova/react-mesto-api-full">
                                 <img className="portfolio__icon" src={portfolioIcon} alt="Изображение стрелки" />
                             </a>
                         </li>

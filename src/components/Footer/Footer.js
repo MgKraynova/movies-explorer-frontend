@@ -12,13 +12,13 @@ function Footer() {
                 <nav className="footer__menu">
                     <ul className="footer__list list">
                         <li>
-                            <a href="https://practicum.yandex.ru" className="footer__link link">Яндекс.Практикум</a>
+                            <a target="_blank" href="https://practicum.yandex.ru" className="footer__link link">Яндекс.Практикум</a>
                         </li>
                         <li>
-                            <a href="https://practicum.yandex.ru" className="footer__link link">Github</a>
+                            <a target="_blank" href="https://practicum.yandex.ru" className="footer__link link">Github</a>
                         </li>
                         <li>
-                            <a href="https://ru-ru.facebook.com/" className="footer__link link">Facebook</a>
+                            <a target="_blank" href="https://ru-ru.facebook.com/" className="footer__link link">Facebook</a>
                         </li>
                     </ul>
                 </nav>
