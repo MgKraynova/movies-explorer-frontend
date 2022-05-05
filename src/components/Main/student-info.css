@@ -4,6 +4,7 @@
     gap: 66px;
     padding-top: 110px;
     padding-bottom: 100px;
+    width: 100%;
 }
 
 @media screen and (max-width: 769px) {
@@ -14,16 +15,46 @@
     }
 }
 
+@media screen and (max-width: 605px) {
+    .student-info {
+        gap: 60px;
+        padding-top: 70px;
+        padding-bottom: 69px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .student-info {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+
 .student-info__content {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
+@media screen and (max-width: 605px) {
+    .student-info__content {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 40px;
+    }
+}
+
 .student-info__text-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+@media screen and (max-width: 605px) {
+    .student-info__text-container {
+        align-self: start;
+        gap: 40px;
+    }
 }
 
 .student-info__main-info {
@@ -39,6 +70,12 @@
     }
 }
 
+@media screen and (max-width: 605px) {
+    .student-info__main-info {
+        max-width: 100%;
+    }
+}
+
 .student-info__wrapper {
     display: flex;
     flex-direction: column;
@@ -48,6 +85,12 @@
 @media screen and (max-width: 769px) {
     .student-info__wrapper {
         gap: 16px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .student-info__wrapper {
+        gap: 20px;
     }
 }
 
@@ -70,6 +113,13 @@
     }
 }
 
+@media screen and (max-width: 426px) {
+    .student-info__subtitle {
+        font-size: 30px;
+        line-height: 36px;
+    }
+}
+
 .student-info__caption {
     margin: 0;
     font-style: normal;
@@ -86,6 +136,14 @@
         font-size: 12px;
         line-height: 18px;
         /* identical to box height, or 150% */
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .student-info__caption {
+        font-size: 11px;
+        line-height: 16px;
+        /* identical to box height, or 145% */
     }
 }
 
@@ -110,10 +168,36 @@
     }
 }
 
+@media screen and (max-width: 730px) {
+    .student-info__description {
+        max-width: 230px;
+    }
+}
+
+@media screen and (max-width: 605px) {
+    .student-info__description {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .student-info__description {
+        font-size: 11px;
+        line-height: 16px;
+        /* or 145% */
+    }
+}
+
 .student-info__list {
     display: flex;
     flex-direction: row;
     gap: 20px;
+}
+
+@media screen and (max-width: 426px) {
+    .student-info__list {
+        gap: 26px;
+    }
 }
 
 .student-info__link {
@@ -138,5 +222,12 @@
     .student-info__img {
         width: 255px;
         height: 307px;
+    }
+}
+
+@media screen and (max-width: 605px) {
+    .student-info__img {
+        width: 292px;
+        height: 352px;
     }
 }
