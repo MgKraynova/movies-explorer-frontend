@@ -1,13 +1,15 @@
 .section {
     box-sizing: border-box;
-    padding: 0 70px;
+    padding-left: 70px;
+    padding-right: 70px;
     /*width: 100%;*/
     /*todo ?*/
 }
 
 @media screen and (max-width: 900px) {
     .section {
-        padding: 0 50px;
+        padding-left: 50px;
+        padding-right: 50px;
     }
 }
 
@@ -17,9 +19,21 @@
     }
 }
 
+@media screen and (max-width: 426px) {
+    .section {
+        padding: unset;
+    }
+}
+
 .section__header {
     border-bottom: 1px solid #000000;
     padding-bottom: 23px;
+}
+
+@media screen and (max-width: 426px) {
+    .section__header {
+        padding-bottom: 28px;
+    }
 }
 
 .section__title {
@@ -31,4 +45,12 @@
     letter-spacing: -0.04em;
     color: #000000;
     margin: 0;
+}
+
+@media screen and (max-width: 426px) {
+    .section__title {
+        font-size: 18px;
+        line-height: 22px;
+        /* identical to box height */
+    }
 }
