@@ -1,7 +1,8 @@
 .section {
     box-sizing: border-box;
     padding: 0 70px;
-    width: 100%;
+    /*width: 100%;*/
+    /*todo ?*/
 }
 
 @media screen and (max-width: 900px) {
