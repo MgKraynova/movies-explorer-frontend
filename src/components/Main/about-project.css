@@ -74,17 +74,17 @@
     gap: 26px;
 }
 
-@media screen and (max-width: 700px) {
-    .about-project__text-container  {
-        width: unset;
-    }
-}
-
 @media screen and (max-width: 769px) {
     .about-project__text-container  {
         gap: 23px;
     }
 }
+
+/*@media screen and (max-width: 700px) {*/
+/*    .about-project__text-container  {*/
+/*        width: unset;*/
+/*    }*/
+/*}*/
 
 @media screen and (max-width: 426px) {
     .about-project__text-container  {
@@ -102,7 +102,7 @@
     margin: 0;
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 426px) {
     .about-project__subtitle  {
         font-size: 18px;
         line-height: 22px;

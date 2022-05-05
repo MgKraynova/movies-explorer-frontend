@@ -114,15 +114,21 @@ function Main() {
                     <ul className="portfolio__list list">
                         <li className="portfolio__item">
                             <a className="portfolio__link link" href="https://github.com/MgKraynova/how-to-learn">Статичный сайт</a>
-                            <img className="portfolio__icon" src={portfolioIcon} alt="Изображение стрелки" />
+                            <a className="link" href="https://github.com/MgKraynova/how-to-learn">
+                                <img className="portfolio__icon" src={portfolioIcon} alt="Изображение стрелки" />
+                            </a>
                         </li>
                         <li className="portfolio__item">
                             <a className="portfolio__link link" href="https://github.com/MgKraynova/russian-travel">Адаптивный сайт</a>
-                            <img className="portfolio__icon" src={portfolioIcon} alt="Изображение стрелки" />
+                            <a className="link" href="https://github.com/MgKraynova/russian-travel">
+                                <img className="portfolio__icon" src={portfolioIcon} alt="Изображение стрелки" />
+                            </a>
                         </li>
                         <li className="portfolio__item">
                             <a className="portfolio__link link" href="https://github.com/MgKraynova/react-mesto-api-full">Одностраничное приложение</a>
-                            <img className="portfolio__icon" src={portfolioIcon} alt="Изображение стрелки" />
+                            <a className="link" href="https://github.com/MgKraynova/react-mesto-api-full">
+                                <img className="portfolio__icon" src={portfolioIcon} alt="Изображение стрелки" />
+                            </a>
                         </li>
                     </ul>
                 </section>

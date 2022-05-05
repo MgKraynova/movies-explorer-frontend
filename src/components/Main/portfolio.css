@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 50px;
     padding-bottom: 125px;
+    width: 100%;
 }
 
 @media screen and (max-width: 769px) {
@@ -35,6 +36,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding-right: 6px;
+    align-items: center;
 }
 
 .portfolio__link {
