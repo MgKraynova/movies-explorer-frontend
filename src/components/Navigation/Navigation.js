@@ -9,11 +9,11 @@ function Navigation({type}) {
     </nav>
 
     const AfterLoggedInMenu = <nav className="navigation__logged-menu">
-        <div>
-            <NavLink className="navigation__logged-menu-link link" to="/movies">Фильмы</NavLink>
-            <NavLink className="navigation__logged-menu-link header__logged-menu-link_type_button link" to="/signin">Сохраненные фильмы</NavLink>
+        <div className="navigation__wrapper" >
+            <NavLink className="navigation__link navigation__logged-menu-link_type_active link" to="/movies">Фильмы</NavLink>
+            <NavLink className="navigation__link link" to="/signin">Сохраненные фильмы</NavLink>
         </div>
-        <NavLink className="navigation__main-link navigation__logged-menu-link_type_button link" to="/signin">Аккаунт</NavLink>
+        <NavLink className="navigation__button link" to="/signin">Аккаунт</NavLink>
     </nav>
 
     return (

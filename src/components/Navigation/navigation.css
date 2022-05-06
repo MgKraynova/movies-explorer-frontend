@@ -24,6 +24,45 @@
     padding: 8px 20px;
 }
 
+.navigation__logged-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navigation__wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.navigation__link {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    /* identical to box height, or 138% */
+    text-align: right;
+    color: #000000;
+}
+
+.navigation__link_type_active {
+    font-weight: 500;
+}
+
+.navigation__button {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height, or 114% */
+    background: #F9F9F9;
+    border-radius: 20px;
+    padding: 8px 20px;
+}
+
 @media screen and (max-width: 426px) {
     .navigation__auth-menu {
         gap: 14px;

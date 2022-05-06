@@ -5,6 +5,7 @@
     align-items: center;
     width: 100%;
     box-sizing: border-box;
+    outline: 1px solid red;
 }
 
 .header_background_dark-blue {
@@ -18,6 +19,12 @@
 .header_type_main-page {
     padding: 18px 70px;
     max-width: 1280px;
+}
+
+.header_type_logged-in {
+    padding: 17px 70px 19px 70px;
+    max-width: 1280px;
+    gap: 45px;
 }
 
 .header__logo {
