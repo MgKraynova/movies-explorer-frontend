@@ -9,10 +9,12 @@ import './portfolio.css';
 import titlePageLogo from '../../images/title-page__logo.svg';
 import photo from '../../images/student-info__img.jpg';
 import portfolioIcon from '../../images/portfolio__icon.svg';
+import Header from "../Header/Header";
 
 function Main() {
     return (
         <>
+            <Header headerStyles={'header header_background_dark-blue header_type_regular'} showAuthMenu={true} />
             <main className="main">
                 <section className="title-page section">
                     <h1 className="title-page__title">Учебный проект студента факультета Веб-разработки.</h1>
