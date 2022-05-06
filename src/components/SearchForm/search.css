@@ -1,11 +1,11 @@
 .search {
-    padding: 77px 70px 39px;
+    padding: 77px 70px 0;
     width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    border-bottom: 1px solid #E8E8E8;
+    align-self: center;
 }
 
 .search__form {
@@ -45,7 +45,10 @@
     width: 77px;
     height: 46px;
     border: none;
-    /*border: 1px solid #3456F3;*/
+}
+
+.search__button:hover {
+    cursor: pointer;
 }
 
 .search__container {
@@ -54,7 +57,10 @@
     gap: 12px;
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid #E8E8E8;
+    padding-bottom: 39px;
 }
+
 .search__text {
     font-style: normal;
     font-weight: 400;
