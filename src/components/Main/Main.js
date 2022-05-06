@@ -14,7 +14,8 @@ import Header from "../Header/Header";
 function Main() {
     return (
         <>
-            <Header headerStyles={'header header_background_dark-blue header_type_regular'} showAuthMenu={true} />
+            <Header headerStyles={'header header_background_dark-blue header_type_main-page'}
+            navigationType={'mainPageMenu'}/>
             <main className="main">
                 <section className="title-page section">
                     <h1 className="title-page__title">Учебный проект студента факультета Веб-разработки.</h1>
