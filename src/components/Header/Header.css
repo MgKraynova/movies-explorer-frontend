@@ -42,6 +42,10 @@
         max-width: 768px;
         padding: 18px 30px;
     }
+
+    .header_type_logged-in {
+        padding: 18px 38px 18px 30px;
+    }
 }
 
 @media screen and (max-width: 426px) {

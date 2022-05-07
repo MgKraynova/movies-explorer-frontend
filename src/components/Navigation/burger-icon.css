@@ -1,0 +1,33 @@
+.burger-icon {
+    display: none;
+    flex-direction: column;
+    gap: 7px;
+    z-index: 5;
+}
+
+.burger-icon__line {
+    width: 28px;
+    height: 3px;
+    background-color: #000000;
+    transition: 0.4s;
+}
+
+.burger-icon__line_animation_first-line {
+    transform: translate(0px, 10px) rotate(45deg);
+    width: 22px;
+}
+
+.burger-icon__line_animation_second-line {
+    opacity: 0;
+}
+
+.burger-icon__line_animation_third-line {
+    transform: translate(0px, -10px) rotate(-45deg);
+    width: 22px;
+}
+
+@media screen and (max-width: 769px) {
+    .burger-icon {
+        display: flex;
+    }
+}
