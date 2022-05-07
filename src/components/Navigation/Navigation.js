@@ -19,9 +19,9 @@ function Navigation({type}) {
 
     const AfterLoggedInMenu = <nav className="navigation__logged-menu">
         <div className="navigation__wrapper">
-            <NavLink className="navigation__link navigation__logged-menu-link_type_active link"
+            <NavLink className="navigation__link navigation__link_type_active link"
                      to="/movies">Фильмы</NavLink>
-            <NavLink className="navigation__link link" to="/signin">Сохраненные фильмы</NavLink>
+            <NavLink className="navigation__link link" to="/saved-movies">Сохраненные фильмы</NavLink>
         </div>
         <AccountButton styles={"account-button account-button_invisible link"} />
 
@@ -54,8 +54,7 @@ function Navigation({type}) {
                     <li>
                         <NavLink className={location.pathname === "/movies"
                             ? "burger-menu__link link burger-menu__link_active"
-                            : "burger-menu__link link"} to="/movies">Сохранённые фильмы</NavLink>
-                        {/*todo поменять роут*/}
+                            : "burger-menu__link link"} to="/saved-movies">Сохранённые фильмы</NavLink>
                     </li>
                 </ul>
                 <AccountButton styles={"account-button link"} />
@@ -68,7 +67,7 @@ function Navigation({type}) {
     }
 
     return (
-        type === 'mainPageMenu' && MainPageMenu || type === 'afterLoggedInMenu' && AfterLoggedInMenu
+        (type === 'mainPageMenu' && MainPageMenu) || (type === 'afterLoggedInMenu' && AfterLoggedInMenu)
     )
 }
 

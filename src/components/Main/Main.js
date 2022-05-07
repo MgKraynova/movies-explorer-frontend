@@ -10,6 +10,7 @@ import titlePageLogo from '../../images/title-page__logo.svg';
 import photo from '../../images/student-info__img.jpg';
 import portfolioIcon from '../../images/portfolio__icon.svg';
 import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 function Main() {
     return (
@@ -136,6 +137,7 @@ function Main() {
                     </ul>
                 </section>
             </main>
+            <Footer />
         </>
     )
 }
