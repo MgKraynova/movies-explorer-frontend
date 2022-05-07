@@ -33,6 +33,10 @@
     outline: 2px solid  #3456F3;
 }
 
+.search__input:hover {
+    outline: 2px solid  #3456F3;
+}
+
 .search__button {
     font-style: normal;
     font-weight: 500;
@@ -50,6 +54,7 @@
 
 .search__button:hover {
     cursor: pointer;
+    opacity: 0.8;
 }
 
 .search__container {

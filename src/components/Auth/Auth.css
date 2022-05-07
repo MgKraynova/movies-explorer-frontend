@@ -68,7 +68,6 @@
     padding: 15px;
     box-sizing: border-box;
     width: 100%;
-
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -77,8 +76,12 @@
     color: #000000;
 }
 
+.auth__input:hover {
+    outline: 2px solid #3456F3;
+}
+
 .auth__input:focus {
-    outline: 2px solid  #3456F3;
+    outline: 2px solid #3456F3;
 }
 
 .auth__input-error {
@@ -116,6 +119,7 @@
 
 .auth__button:hover {
     cursor: pointer;
+    opacity: 0.8;
 }
 
 .auth__text {
