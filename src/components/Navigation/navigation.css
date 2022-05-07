@@ -52,25 +52,10 @@
     font-weight: 500;
 }
 
-/*.navigation__button {*/
-/*    font-style: normal;*/
-/*    font-weight: 500;*/
-/*    font-size: 14px;*/
-/*    line-height: 16px;*/
-/*    !* identical to box height, or 114% *!*/
-/*    background: #F9F9F9;*/
-/*    border-radius: 20px;*/
-/*    padding: 8px 20px;*/
-/*}*/
-
 @media screen and (max-width: 769px) {
     .navigation__wrapper {
         display: none;
     }
-
-    /*.navigation__button {*/
-    /*    display: none;*/
-    /*}*/
 
     .navigation__logged-menu {
         justify-content: right;

@@ -15,6 +15,7 @@
 }
 
 .search__input {
+    box-sizing: border-box;
     padding: 15px 22px;
     width: 100%;
     font-style: normal;
@@ -78,5 +79,36 @@
 
     .search__button {
         width: 82px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .search {
+        padding: 77px 14px 0;
+        gap: 42px;
+    }
+
+    .search__button {
+        width: 82px;
+    }
+
+    .search__input {
+        padding: 13px 16px;
+    }
+
+    .search__text {
+        font-size: 11px;
+        line-height: 18px;
+        /* identical to box height, or 164% */
+    }
+
+    .search__container {
+        padding-bottom: 42px;
+    }
+}
+
+@media screen and (max-width: 321px) {
+    .search__input {
+        width: 212px;
     }
 }

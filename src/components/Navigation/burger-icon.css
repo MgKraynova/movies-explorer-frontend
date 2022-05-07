@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 7px;
     z-index: 5;
+    outline: 1px solid red;
 }
 
 .burger-icon__line {
@@ -29,5 +30,24 @@
 @media screen and (max-width: 769px) {
     .burger-icon {
         display: flex;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .burger-icon__line {
+        width: 22px;
+        height: 2.5px;
+    }
+
+    .burger-icon {
+        gap: 6px;
+    }
+
+    .burger-icon__line_animation_first-line {
+        transform: translate(0px, 10px) rotate(45deg);
+    }
+
+    .burger-icon__line_animation_third-line {
+        transform: translate(0px, -7px) rotate(-45deg);
     }
 }

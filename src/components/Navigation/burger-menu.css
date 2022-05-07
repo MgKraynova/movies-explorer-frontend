@@ -48,3 +48,15 @@
 .burger-menu__link_active {
     border-bottom: 2px solid #000000;
 }
+
+@media screen and (max-width: 426px) {
+    .burger-menu {
+        padding-top: 144px;
+        padding-bottom: 46px;
+        height: 780px;
+    }
+
+    .burger-menu__list {
+        gap: 24px;
+    }
+}

@@ -56,4 +56,8 @@
     .header_type_auth-page {
         justify-content: center;
     }
+
+    .header_type_logged-in {
+        padding: 18px 23px 18px 14px;
+    }
 }
