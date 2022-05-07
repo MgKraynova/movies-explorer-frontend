@@ -30,7 +30,7 @@
     flex-direction: column;
     gap: 28px;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .burger-menu__link {

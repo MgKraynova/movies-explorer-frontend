@@ -16,7 +16,7 @@
     gap: 26px;
     justify-content: space-between;
     padding-right: 14px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .card__text-container {
@@ -59,7 +59,7 @@
 
 .card__button {
     background: #F9F9F9;
-    border-radius: 36px;
+    border-radius: 50%;
     background-image: url('../../images/card__save-icon.svg');
     border: none;
     width: 30px;
@@ -77,4 +77,18 @@
     width: 100%;
     max-width: 364px;
     height: 203px;
+}
+
+@media screen and (max-width: 769px) {
+    .card {
+        height: 258px;
+    }
+
+    .card__image {
+        height: 190px;
+    }
+
+    .card__wrapper {
+        gap: 0;
+    }
 }

@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     gap: 80px;
+    outline: 1px solid red;
 }
 
 .movies__list {
@@ -34,4 +35,15 @@
 .movies__button:hover {
     cursor: pointer;
     background-color: #2BE080;
+}
+
+@media screen and (max-width: 769px) {
+    .movies {
+        padding: 79px 30px 100px;
+    }
+
+    .movies__list {
+        column-gap: 30px;
+        row-gap: 36px;
+    }
 }
