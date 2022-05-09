@@ -25,5 +25,3 @@ function Main() {
 }
 
 export default Main;
-
-//todo птимизировать img

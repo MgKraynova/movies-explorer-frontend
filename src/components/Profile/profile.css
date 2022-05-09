@@ -65,6 +65,9 @@
     border: none;
     padding: 17px 0 16px;
     border-radius: 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .profile__input:focus {

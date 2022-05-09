@@ -46,7 +46,7 @@ function Profile() {
                                 autoComplete="on"
                                 minLength="2"
                                 maxLength="15"
-                                value="Виталий"
+                                // value="Виталий"
                                 disabled={!isEditModeOn}
                             />
                         </label>
@@ -54,13 +54,12 @@ function Profile() {
                             <p className="profile__input-caption">Почта</p>
                             <input
                                 className="profile__input"
-                                type="text"
+                                type="email"
                                 required
-                                name="name"
+                                name="email"
                                 autoComplete="on"
                                 minLength="2"
-                                maxLength="15"
-                                value="pochta@yandex.ru"
+                                // value="pochta@yandex.ru"
                                 disabled={!isEditModeOn}
                             />
                         </label>
