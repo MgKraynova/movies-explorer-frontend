@@ -13,6 +13,7 @@ function Auth({title, ButtonText, children, caption, authFormStyle}) {
                     </fieldset>
                     <div className="auth__wrapper">
                         <button type="submit" className="auth__button">{ButtonText}</button>
+                        {/*todo заменить кнопку на компонент*/}
                         {caption}
                     </div>
                 </form>

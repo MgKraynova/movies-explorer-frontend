@@ -52,7 +52,7 @@ function Navigation({type}) {
                             : "burger-menu__link link"} to="/movies">Фильмы</NavLink>
                     </li>
                     <li>
-                        <NavLink className={location.pathname === "/movies"
+                        <NavLink className={location.pathname === "/saved-movies"
                             ? "burger-menu__link link burger-menu__link_active"
                             : "burger-menu__link link"} to="/saved-movies">Сохранённые фильмы</NavLink>
                     </li>
