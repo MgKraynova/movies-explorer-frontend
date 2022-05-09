@@ -1,11 +1,14 @@
 .promo {
     background: #073042;
-    padding-top: 50px;
+    padding-top: 47px;
     padding-bottom: 60px;
     display: flex;
     flex-direction: column;
     gap: 102px;
     width: 100%;
+    padding-left: 70px;
+    padding-right: 70px;
+    box-sizing: border-box;
 }
 
 .promo__title {
@@ -31,6 +34,8 @@
     .promo {
         justify-content: center;
         align-items: center;
+        padding-left: 50px;
+        padding-right: 50px;
     }
 
     .promo__title {
@@ -45,11 +50,12 @@
 
 @media screen and (max-width: 769px) {
     .promo {
-        padding-top: 300px;
+        padding-top: 296px;
         padding-bottom: 70px;
         padding-right: 44px;
         padding-left: 44px;
         gap: 140px;
+        max-width: 768px;
     }
 }
 
@@ -75,7 +81,7 @@
 
 @media screen and (max-width: 426px) {
     .promo {
-        padding-top: 183px;
+        padding-top: 180px;
         padding-bottom: 40px;
         gap: 60px;
     }

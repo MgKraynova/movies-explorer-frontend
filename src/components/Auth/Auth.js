@@ -1,5 +1,6 @@
 import Header from "../Header/Header";
 import './Auth.css';
+import Button from "../Button/Button";
 
 function Auth({title, ButtonText, children, caption, authFormStyle}) {
     return (
@@ -12,8 +13,7 @@ function Auth({title, ButtonText, children, caption, authFormStyle}) {
                         {children}
                     </fieldset>
                     <div className="auth__wrapper">
-                        <button type="submit" className="auth__button">{ButtonText}</button>
-                        {/*todo заменить кнопку на компонент*/}
+                        <Button buttonSize={'small'} ButtonText={ButtonText} />
                         {caption}
                     </div>
                 </form>
