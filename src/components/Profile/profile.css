@@ -1,19 +1,9 @@
 .profile {
-    /*font-style: normal;*/
-    /*font-weight: 500;*/
-    /*font-size: 24px;*/
-    /*line-height: 29px;*/
-    /*!* identical to box height *!*/
-    /*text-align: center;*/
-    /*color: #000000;*/
-    /*margin: 0;*/
-
     display: flex;
     flex-direction: column;
     gap: 107px;
     padding-top: 70px;
     padding-bottom: 70px;
-
     max-width: 410px;
     width: 100%;
 }
