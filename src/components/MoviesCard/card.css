@@ -61,7 +61,6 @@
 .card__button {
     background: #F9F9F9;
     border-radius: 50%;
-    background-image: url('../../images/card__save-icon.svg');
     border: none;
     width: 30px;
     height: 30px;
@@ -72,6 +71,14 @@
 .card__button:hover {
     cursor: pointer;
     background-color: #2BE080;
+}
+
+.card__button_type_save {
+    background-image: url('../../images/card__save-icon.svg');
+}
+
+.card__button_type_delete {
+    background-image: url("../../images/card__delete-icon.svg");
 }
 
 .card__image {

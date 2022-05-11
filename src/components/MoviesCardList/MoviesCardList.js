@@ -1,7 +1,11 @@
+import { useLocation } from "react-router-dom";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import './movies.css';
 
 function MoviesCardList() {
+
+    const location = useLocation();
+
     return (
         <section className="movies">
             <ul className="movies__list list">
@@ -16,9 +20,8 @@ function MoviesCardList() {
                 <MoviesCard />
                 <MoviesCard />
                 <MoviesCard />
-                {/*<MoviesCard />*/}
             </ul>
-            <button type="button" className="movies__button">Еще</button>
+            {location.pathname === "/movies" && <button type="button" className="movies__button">Еще</button>}
         </section>
     )
 }
