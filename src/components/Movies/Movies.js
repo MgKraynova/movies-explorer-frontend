@@ -4,13 +4,13 @@ import SearchForm from "../SearchForm/SearchForm";
 import './main-content.css';
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function Movies() {
+function Movies({onSubmitSearch, isLoading, isApiError, allMovies}) {
     return (
         <>
             <Header headerStyles={'header header_background_white header_type_logged-in'} navigationType={'afterLoggedInMenu'} />
             <main className="main-content">
-                <SearchForm />
-                <MoviesCardList />
+                <SearchForm isLoading={isLoading} onSubmitSearch={onSubmitSearch} />
+                <MoviesCardList isApiError={isApiError} isLoading={isLoading} allMovies={allMovies} />
             </main>
             <Footer />
         </>

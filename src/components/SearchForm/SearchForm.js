@@ -2,7 +2,7 @@ import './search.css';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import {useState} from "react";
 
-function SearchForm() {
+function SearchForm({onSubmitSearch, isLoading}) {
 
     const [inputValidity, setInputValidity] = useState(false);
     const [isErrorShown, setIsErrorShown] = useState(false);
@@ -21,6 +21,10 @@ function SearchForm() {
             setIsErrorShown(true);
         } else {
             setIsErrorShown(false);
+
+            if (!localStorage.getItem('allMovies')) {
+                onSubmitSearch();
+            }
         }
     }
 
@@ -30,11 +34,9 @@ function SearchForm() {
                 <input
                 className="search__input"
                 placeholder="Фильм"
-                // required
                 type="text"
-                // minLength="1"
-                // value={movieInputValue}
                 onChange={handleInputChange}
+                disabled={isLoading ? true : false}
                 />
                 <button className="search__button" type="submit">Найти</button>
                 <span className="search__error">{isErrorShown && 'Нужно ввести ключевое слово'}</span>

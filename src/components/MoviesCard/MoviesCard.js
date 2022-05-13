@@ -1,8 +1,8 @@
 import {useLocation} from "react-router-dom";
-import cardExampleImage from '../../images/card__example-image.jpg';
 import './card.css';
+import '../Link/link.css';
 
-function MoviesCard() {
+function MoviesCard({movie}) {
 
     const location = useLocation();
 
@@ -10,14 +10,16 @@ function MoviesCard() {
         <li className="card">
             <div className="card__wrapper">
                 <div className="card__text-container">
-                    <h2 className="card__title">33 слова о дизайне</h2>
-                    <p className="card__text">1ч 47м</p>
+                    <h2 className="card__title">{movie.nameRU}</h2>
+                    <p className="card__text">{movie.duration}</p>
                 </div>
                 <button type="button" className={location.pathname === "/movies"
                     ? "card__button card__button_type_save"
                     : "card__button card__button_type_delete"}   />
             </div>
-            <img className="card__image" src={cardExampleImage} alt="Пример изображения" />
+            <a className="link" href={movie.trailerLink}>
+                <img className="card__image" src={'https://api.nomoreparties.co/' + movie.image.url} alt={movie.nameRU} />
+            </a>
         </li>
     )
 }

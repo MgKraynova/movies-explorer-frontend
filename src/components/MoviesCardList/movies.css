@@ -36,6 +36,19 @@
     background-color: #2BE080;
 }
 
+.movies__text {
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+    /* identical to box height */
+    color: #000000;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+}
+
 @media screen and (max-width: 769px) {
     .movies {
         padding: 79px 30px 100px;
