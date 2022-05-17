@@ -21,7 +21,7 @@ function MoviesCard({movie}) {
             <div className="card__wrapper">
                 <div className="card__text-container">
                     <h2 className="card__title">{movie.nameRU}</h2>
-                    <p className="card__text">{movie.duration}</p>
+                    <p className="card__text">{`${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`}</p>
                 </div>
                 <button type="button" className={location.pathname === "/movies"
                     ? cardSaveButtonClassName
