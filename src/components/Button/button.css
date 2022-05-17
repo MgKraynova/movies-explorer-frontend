@@ -31,6 +31,11 @@
     color: #C2C2C2;
 }
 
+.button_disabled:hover {
+    cursor: auto;
+    opacity: 1;
+}
+
 @media screen and (max-width: 500px) {
     .button {
         font-size: 12px;

@@ -73,6 +73,10 @@
     background-color: #2BE080;
 }
 
+.card__button_active {
+    background-color: #2BE080;
+}
+
 .card__button_type_save {
     background-image: url('../../images/card__save-icon.svg');
 }

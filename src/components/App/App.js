@@ -27,7 +27,6 @@ function App() {
         api.getAllMovies()
             .then((res) => {
                 if (res) {
-                    console.log(res);
                     localStorage.setItem('allMovies', JSON.stringify(res));
                     setAllMovies(res);
                 }

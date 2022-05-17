@@ -1,10 +1,20 @@
 import {useLocation} from "react-router-dom";
 import './card.css';
 import '../Link/link.css';
+import {useState} from "react";
 
 function MoviesCard({movie}) {
 
     const location = useLocation();
+
+    const [isLiked, setIsLiked] = useState(false);
+
+    const cardSaveButtonClassName = (`card__button card__button_type_save ${isLiked && 'card__button_active'}`);
+    const cardDeleteButtonClassName = ('card__button card__button_type_delete');
+
+    function handleButtonClick() {
+        setIsLiked(!isLiked);
+    }
 
     return (
         <li className="card">
@@ -14,11 +24,12 @@ function MoviesCard({movie}) {
                     <p className="card__text">{movie.duration}</p>
                 </div>
                 <button type="button" className={location.pathname === "/movies"
-                    ? "card__button card__button_type_save"
-                    : "card__button card__button_type_delete"}   />
+                    ? cardSaveButtonClassName
+                    : cardDeleteButtonClassName} onClick={handleButtonClick}/>
             </div>
             <a className="link" href={movie.trailerLink}>
-                <img className="card__image" src={'https://api.nomoreparties.co/' + movie.image.url} alt={movie.nameRU} />
+                <img className="card__image" src={'https://api.nomoreparties.co/' + movie.image.url}
+                     alt={movie.nameRU}/>
             </a>
         </li>
     )

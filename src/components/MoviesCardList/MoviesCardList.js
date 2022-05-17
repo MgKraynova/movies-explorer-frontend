@@ -12,10 +12,10 @@ function MoviesCardList({isLoading, isApiError, allMovies}) {
 
     const [content, setContent] = useState(null);
 
-    const notFoundMessage = <p className="movies__text">Ничего не найдено</p>;
+    const notFoundMessage = (<p className="movies__text">Ничего не найдено</p>);
 
-    const apiErrorMessage = <p className="movies__text">Во время запроса произошла ошибка.
-        Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>;
+    const apiErrorMessage = (<p className="movies__text">Во время запроса произошла ошибка.
+        Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>);
 
     useEffect(() => {
         setContent(null);
@@ -29,7 +29,7 @@ function MoviesCardList({isLoading, isApiError, allMovies}) {
             }
 
             const movieList = <ul className="movies__list list">
-                {allMovies.map((movie) => {
+                {allMovies.slice(0, 3).map((movie) => {
                     return <MoviesCard key={movie.id} movie={movie}/>
                 })
                 }</ul>;
