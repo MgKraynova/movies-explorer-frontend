@@ -8,10 +8,16 @@ function SearchForm({onSubmitSearch, isLoading}) {
     const [isErrorShown, setIsErrorShown] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
     function handleInputChange(event) {
         setInputValue(event.target.value);
         setIsErrorShown(false);
         setInputValidity(event.target.validity.valid);
+    }
+
+    function handleCheckboxClick() {
+        setIsCheckboxChecked(!isCheckboxChecked);
     }
 
     function handleSubmitForm(event) {
@@ -21,6 +27,9 @@ function SearchForm({onSubmitSearch, isLoading}) {
             setIsErrorShown(true);
         } else {
             setIsErrorShown(false);
+
+            localStorage.setItem('searchRequest', inputValue);
+            localStorage.setItem('isCheckboxChecked', isCheckboxChecked.toString());
 
             if (!localStorage.getItem('allMovies')) {
                 onSubmitSearch();
@@ -42,7 +51,7 @@ function SearchForm({onSubmitSearch, isLoading}) {
                 <span className="search__error">{isErrorShown && 'Нужно ввести ключевое слово'}</span>
             </form>
             <div className="search__container">
-                <FilterCheckbox />
+                <FilterCheckbox handleCheckboxClick={handleCheckboxClick} isCheckboxChecked={isCheckboxChecked} />
                 <p className="search__text">Короткометражки</p>
             </div>
         </div>
