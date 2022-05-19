@@ -1,14 +1,23 @@
 import './search.css';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 function SearchForm({onSubmitSearch, isLoading}) {
 
     const [inputValidity, setInputValidity] = useState(false);
     const [isErrorShown, setIsErrorShown] = useState(false);
     const [inputValue, setInputValue] = useState('');
-
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('searchRequest')) {
+            setInputValue(localStorage.getItem('searchRequest'));
+        }
+
+        if (JSON.parse(localStorage.getItem('isCheckboxChecked'))) {
+            setIsCheckboxChecked(JSON.parse(localStorage.getItem('isCheckboxChecked')));
+        }
+    }, [])
 
     function handleInputChange(event) {
         setInputValue(event.target.value);
@@ -18,6 +27,7 @@ function SearchForm({onSubmitSearch, isLoading}) {
 
     function handleCheckboxClick() {
         setIsCheckboxChecked(!isCheckboxChecked);
+        localStorage.setItem('isCheckboxChecked', JSON.stringify(!isCheckboxChecked));
     }
 
     function handleSubmitForm(event) {
@@ -29,11 +39,12 @@ function SearchForm({onSubmitSearch, isLoading}) {
             setIsErrorShown(false);
 
             localStorage.setItem('searchRequest', inputValue);
-            localStorage.setItem('isCheckboxChecked', isCheckboxChecked.toString());
+            localStorage.setItem('isCheckboxChecked', JSON.stringify(isCheckboxChecked));
 
-            if (!localStorage.getItem('allMovies')) {
-                onSubmitSearch();
-            }
+            localStorage.removeItem('movieList');
+            localStorage.removeItem('isMovieListButtonMoreShown');
+
+            onSubmitSearch();
         }
     }
 
@@ -45,9 +56,10 @@ function SearchForm({onSubmitSearch, isLoading}) {
                 placeholder="Фильм"
                 type="text"
                 onChange={handleInputChange}
-                disabled={isLoading ? true : false}
+                disabled={isLoading}
+                value={inputValue}
                 />
-                <button className="search__button" type="submit">Найти</button>
+                <button disabled={isLoading} className={`search__button ${isLoading && 'search__button_disabled'}`} type="submit">Найти</button>
                 <span className="search__error">{isErrorShown && 'Нужно ввести ключевое слово'}</span>
             </form>
             <div className="search__container">

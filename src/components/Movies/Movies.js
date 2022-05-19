@@ -10,7 +10,7 @@ function Movies({onSubmitSearch, isLoading, isApiError, allMovies}) {
             <Header headerStyles={'header header_background_white header_type_logged-in'} navigationType={'afterLoggedInMenu'} />
             <main className="main-content">
                 <SearchForm isLoading={isLoading} onSubmitSearch={onSubmitSearch} />
-                <MoviesCardList isApiError={isApiError} isLoading={isLoading} allMovies={allMovies} />
+                <MoviesCardList isApiError={isApiError} isLoading={isLoading} allMovies={allMovies || JSON.parse(localStorage.getItem('allMovies'))} />
             </main>
             <Footer />
         </>

@@ -2,16 +2,21 @@ import {useLocation} from "react-router-dom";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import './movies.css';
 import Preloader from "../Preloader/Preloader";
-import {useEffect, useState, useLayoutEffect} from "react";
+import {useEffect, useState} from "react";
+import useWindowWidth from "../../utils/useWindowWidth";
+
 
 function MoviesCardList({isLoading, isApiError, allMovies}) {
 
-    localStorage.clear(); //todo delete
+    // localStorage.clear(); //todo delete
+
+    const windowWidth = useWindowWidth();
 
     const location = useLocation();
 
     const [content, setContent] = useState(null);
-    const [numberOfMoviesAtPage, setNumberOfMoviesAtPage] = useState(3);
+    const [numberOfMoviesAtPage, setNumberOfMoviesAtPage] = useState(12);
+    const [numberOfAdditionalMovies, setNumberOfAdditionalMovies] = useState(3);
     const [movieList, setMovieList] = useState(null);
     const [isButtonShown, setIsButtonShown] = useState(false);
 
@@ -19,6 +24,19 @@ function MoviesCardList({isLoading, isApiError, allMovies}) {
 
     const apiErrorMessage = (<p className="movies__text">Во время запроса произошла ошибка.
         Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>);
+
+    useEffect(() => {
+        if (windowWidth > 1087) {
+            setNumberOfMoviesAtPage(12);
+            setNumberOfAdditionalMovies(3);
+        } else if (windowWidth > 426) {
+            setNumberOfMoviesAtPage(8);
+            setNumberOfAdditionalMovies(2);
+        } else {
+            setNumberOfMoviesAtPage(5);
+            setNumberOfAdditionalMovies(2);
+        }
+    }, [windowWidth])
 
     useEffect(() => {
         if (isLoading) {
@@ -33,23 +51,41 @@ function MoviesCardList({isLoading, isApiError, allMovies}) {
     }, [isApiError]);
 
     useEffect(() => {
-        if (allMovies) {
+
+        if (JSON.parse(localStorage.getItem('movieList')) &&
+            JSON.parse(localStorage.getItem('isMovieListButtonMoreShown'))) {
+
+            setContent(<ul className="movies__list list">
+                {JSON.parse(localStorage.getItem('movieList')).map((movie) => {
+                    return <MoviesCard key={movie.id} movie={movie}/>
+                })}
+            </ul>);
+
+            setIsButtonShown(JSON.parse(localStorage.getItem('isMovieListButtonMoreShown')));
+        } else if (allMovies) {
+
             if (allMovies.length === 0) {
                 setContent(notFoundMessage);
                 return;
             }
 
+            setContent(null);
+
             setContent(<ul className="movies__list list">
-                {allMovies.slice(numberOfMoviesAtPage - 3, numberOfMoviesAtPage).map((movie) => {
+                {allMovies.slice(0, numberOfMoviesAtPage).map((movie) => {
                     return <MoviesCard key={movie.id} movie={movie}/>
                 })}
             </ul>);
 
+            localStorage.setItem('movieList', JSON.stringify(allMovies.slice(0, numberOfMoviesAtPage)));
+
             setIsButtonShown(true);
 
-            setNumberOfMoviesAtPage(numberOfMoviesAtPage + 3);
+            localStorage.setItem('isMovieListButtonMoreShown', JSON.stringify(isButtonShown));
+
+            setNumberOfMoviesAtPage(numberOfMoviesAtPage + numberOfAdditionalMovies);
         }
-    }, [allMovies]);
+    }, [allMovies, windowWidth]);
 
     useEffect(() => {
         if (allMovies) {
@@ -58,14 +94,10 @@ function MoviesCardList({isLoading, isApiError, allMovies}) {
     }, [numberOfMoviesAtPage]);
 
     function handleButtonClick() {
-        setNumberOfMoviesAtPage(numberOfMoviesAtPage + 3);
-        console.log('click');
-        console.log('numberOfMoviesAtPage', numberOfMoviesAtPage);
-        console.log('movieList', movieList);
-
+        setNumberOfMoviesAtPage(numberOfMoviesAtPage + numberOfAdditionalMovies);
 
         if (movieList && movieList.length > 0) {
-            console.log('запускаем movieList', movieList);
+            console.log('запускаем отрисовку новых карточек');
             const movieListElement = <ul className="movies__list list">
                 {movieList.map((movie) => {
                     return <MoviesCard key={movie.id} movie={movie}/>
@@ -73,10 +105,14 @@ function MoviesCardList({isLoading, isApiError, allMovies}) {
             </ul>;
 
             setContent(movieListElement);
+
+            localStorage.setItem('movieList', JSON.stringify(movieList));
         }
 
-        if (numberOfMoviesAtPage >  allMovies.length) {
+        if (allMovies && numberOfMoviesAtPage >  allMovies.length) {
             setIsButtonShown(false);
+
+            localStorage.setItem('isMovieListButtonMoreShown', JSON.stringify(isButtonShown));
         }
     }
 
