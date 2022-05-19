@@ -4,7 +4,14 @@ import './movies.css';
 import Preloader from "../Preloader/Preloader";
 import {useEffect, useState} from "react";
 import useWindowWidth from "../../utils/useWindowWidth";
-
+import {
+    NUMBER_OF_MOVIES_AT_PAGE_AT_BIG_SCREENS,
+    NUMBER_OF_MOVIES_AT_PAGE_AT_TABLETS,
+    NUMBER_OF_MOVIES_AT_PAGE_AT_PHONES,
+    NUMBER_OF_ADDITIONAL_MOVIES_AT_BIG_SCREENS,
+    NUMBER_OF_ADDITIONAL_MOVIES_AT_TABLETS,
+    NUMBER_OF_ADDITIONAL_MOVIES_AT_PHONES
+} from '../../utils/config';
 
 function MoviesCardList({isLoading, isApiError, allMovies}) {
 
@@ -27,14 +34,14 @@ function MoviesCardList({isLoading, isApiError, allMovies}) {
 
     useEffect(() => {
         if (windowWidth > 1087) {
-            setNumberOfMoviesAtPage(12);
-            setNumberOfAdditionalMovies(3);
+            setNumberOfMoviesAtPage(NUMBER_OF_MOVIES_AT_PAGE_AT_BIG_SCREENS);
+            setNumberOfAdditionalMovies(NUMBER_OF_ADDITIONAL_MOVIES_AT_BIG_SCREENS);
         } else if (windowWidth > 426) {
-            setNumberOfMoviesAtPage(8);
-            setNumberOfAdditionalMovies(2);
+            setNumberOfMoviesAtPage(NUMBER_OF_MOVIES_AT_PAGE_AT_TABLETS);
+            setNumberOfAdditionalMovies(NUMBER_OF_ADDITIONAL_MOVIES_AT_TABLETS);
         } else {
-            setNumberOfMoviesAtPage(5);
-            setNumberOfAdditionalMovies(2);
+            setNumberOfMoviesAtPage(NUMBER_OF_MOVIES_AT_PAGE_AT_PHONES);
+            setNumberOfAdditionalMovies(NUMBER_OF_ADDITIONAL_MOVIES_AT_PHONES);
         }
     }, [windowWidth])
 
