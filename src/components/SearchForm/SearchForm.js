@@ -44,7 +44,8 @@ function SearchForm({onSubmitSearch, isLoading}) {
             localStorage.removeItem('movieList');
             localStorage.removeItem('isMovieListButtonMoreShown');
 
-            onSubmitSearch();
+            onSubmitSearch(); // todo Не выполняются лишние запросы к бэкенду, например:
+            // запрос всех фильмов с сервиса beatfilm-movies производится только при первом поиске;
         }
     }
 

@@ -6,8 +6,8 @@ import NotFound from "../NotFound/NotFound";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
-import api from "../../utils/MoviesApi";
 import {useState} from "react";
+import moviesApi from "../../utils/MoviesApi";
 
 function App() {
 
@@ -24,7 +24,7 @@ function App() {
         setIsApiError(false);
         setIsLoading(true);
 
-        api.getAllMovies()
+        moviesApi.getAllMovies()
             .then((res) => {
                 if (res) {
                     localStorage.setItem('allMovies', JSON.stringify(res));

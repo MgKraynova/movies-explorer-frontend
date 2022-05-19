@@ -1,16 +1,9 @@
 import MOVIES_URL from './config';
+import Api from "./Api";
 
-class Api {
+class MoviesApi extends Api {
     constructor({serverUrl}) {
-        this._serverUrl = serverUrl;
-    }
-
-    _checkResult(res) {
-        if (res.ok) {
-            return res.json();
-        } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-        }
+        super({serverUrl});
     }
 
     // getUserInfo() {
@@ -26,7 +19,7 @@ class Api {
         return fetch(`${this._serverUrl}`, {
             method: 'GET',
         })
-            .then(this._checkResult);
+            .then(super._checkResult);
     }
 
     // updateUserInfo(newName, newDescription) {
@@ -104,8 +97,8 @@ class Api {
     // }
 }
 
-const api = new Api({
+const moviesApi = new MoviesApi({
     serverUrl: MOVIES_URL
 });
 
-export default api;
+export default moviesApi;
