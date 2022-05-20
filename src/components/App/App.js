@@ -1,4 +1,8 @@
+import {useState, useEffect} from "react";
 import {Route, Routes, useNavigate} from 'react-router-dom';
+
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+
 import Main from "../Main/Main";
 import Register from '../Register/Register';
 import Login from "../Login/Login";
@@ -6,10 +10,9 @@ import NotFound from "../NotFound/NotFound";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
-import {useState} from "react";
+
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
-import {useContext} from "react";
 
 function App() {
 
@@ -20,8 +23,27 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
 
     const navigate = useNavigate();
-    // const CurrentUserContext = useContext(currentUser);
 
+    console.log('currentUser', currentUser);
+    console.log('loggedIn', loggedIn);
+
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    useEffect(() => {
+        if (!loggedIn) {
+            return;
+        }
+
+        mainApi.updateTokenInHeaders();
+
+        mainApi.getUserInfo()
+            .then(setCurrentUser)
+            .catch((err) => {
+                handleApiError(err);
+            });
+    }, [loggedIn]);
 
     function handleApiError(err) {
         console.log('Запрос не выполнен: ', err);
@@ -89,22 +111,39 @@ function App() {
             })
     }
 
+    function checkToken() {
+        if (localStorage.getItem('token')) {
+            const token = localStorage.getItem('token');
+
+            mainApi.updateTokenInHeaders();
+
+            mainApi.getUserInfo()
+                .then((res) => {
+                    setLoggedIn(true);
+                    setCurrentUser(res);
+                })
+                .catch((err) => {
+                    handleApiError(err);
+                });
+        }
+    }
+
 
     return (
-        <>
-            <Routes>
-                <Route index path="/" element={<Main />} />
-                <Route path="/signin" element={<Login onLoginUser={handleLoginUser} />} />
-                <Route path="/signup" element={<Register onRegisterUser={handleRegisterUser} />} />
-                <Route path="/movies" element={<Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
-                                                       isApiError={isApiError} allMovies={allMovies} />} />
-                <Route path="/saved-movies" element={<SavedMovies />} />
-                <Route path="/profile" element={<Profile setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser}/>} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-            {/*<Footer />*/}
-            {/*//todo delete*/}
-        </>
+        <CurrentUserContext.Provider value={currentUser}>
+        <Routes>
+                    <Route index path="/" element={<Main />} />
+                    <Route path="/signin" element={<Login onLoginUser={handleLoginUser} />} />
+                    <Route path="/signup" element={<Register onRegisterUser={handleRegisterUser} />} />
+                    <Route path="/movies" element={<Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
+                                                           isApiError={isApiError} allMovies={allMovies} />} />
+                    <Route path="/saved-movies" element={<SavedMovies />} />
+                    <Route path="/profile" element={<Profile setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser}/>} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+                {/*<Footer />*/}
+                {/*//todo delete*/}
+        </CurrentUserContext.Provider>
     )
 
 }

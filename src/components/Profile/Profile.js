@@ -1,15 +1,18 @@
+import {useState, useContext} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import Header from "../Header/Header";
 import './profile.css';
 import Button from "../Button/Button";
 import '../Link/link.css';
-import {useState} from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Profile({setLoggedIn, setCurrentUser}) {
 
     const [isEditModeOn, setIsEditModeOn] = useState(false);
 
     const navigate = useNavigate();
+
+    const currentUser = useContext(CurrentUserContext);
 
     function handleEditButton() {
         setIsEditModeOn(true);
@@ -42,7 +45,7 @@ function Profile({setLoggedIn, setCurrentUser}) {
             <Header headerStyles={'header header_background_white header_type_logged-in'}
                     navigationType={'afterLoggedInMenu'}/>
             <main className="profile">
-                <h1 className="profile__title">Привет, Виталий!</h1>
+                <h1 className="profile__title">Привет, {currentUser.name}</h1>
                 <form className="profile__form" onSubmit={handleSubmitButtonClick} >
                     <fieldset className="profile__fieldset">
                         <label className="profile__label">
@@ -55,7 +58,7 @@ function Profile({setLoggedIn, setCurrentUser}) {
                                 autoComplete="on"
                                 minLength="2"
                                 maxLength="15"
-                                // value="Виталий"
+                                value={currentUser.name || ''}
                                 disabled={!isEditModeOn}
                             />
                         </label>
@@ -68,7 +71,7 @@ function Profile({setLoggedIn, setCurrentUser}) {
                                 name="email"
                                 autoComplete="on"
                                 minLength="2"
-                                // value="pochta@yandex.ru"
+                                value={currentUser.email || ''}
                                 disabled={!isEditModeOn}
                             />
                         </label>

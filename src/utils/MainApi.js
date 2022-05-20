@@ -3,8 +3,9 @@ import Api from "./Api";
 
 class MainApi extends Api {
 
-    constructor({serverUrl}) {
+    constructor({serverUrl, headers}) {
         super({serverUrl});
+        this._headers = headers;
     }
 
 
@@ -21,9 +22,7 @@ class MainApi extends Api {
     registerNewUser(name, email, password) {
         return fetch(`${this._serverUrl}/signup`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 "name" : name,
                 "password": password,
@@ -36,9 +35,7 @@ class MainApi extends Api {
     loginUser(email, password) {
         return fetch(`${this._serverUrl}/signin`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 "password": password,
                 "email": email
@@ -47,7 +44,20 @@ class MainApi extends Api {
             .then(this._checkResult);
     }
 
+    updateTokenInHeaders() {
+        this._headers = {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        }
+    }
 
+    getUserInfo() {
+        return fetch(`${this._serverUrl}/users/me `, {
+            method: 'GET',
+            headers: this._headers
+        })
+            .then(this._checkResult);
+    }
 
     // getSmt(res) {
     //     super._checkResult(res);
@@ -141,7 +151,10 @@ class MainApi extends Api {
 }
 
 const mainApi = new MainApi({
-    serverUrl: MAIN_API_URL
+    serverUrl: MAIN_API_URL,
+    headers: {
+        'Content-Type': 'application/json'
+    }
 });
 
 export default mainApi;
