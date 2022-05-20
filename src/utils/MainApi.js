@@ -7,6 +7,34 @@ class MainApi extends Api {
         super({serverUrl});
     }
 
+
+    // getUserInfo() {
+    //     return fetch(`${this._serverUrl}/users/me `, {
+    //         method: 'GET',
+    //         headers: this._headers
+    //     })
+    //         .then(this._checkResult);
+    // }
+
+
+
+    registerNewUser(name, email, password) {
+        return fetch(`${this._serverUrl}/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "name" : name,
+                "password": password,
+                "email": email
+            })
+        })
+            .then(this._checkResult);
+    }
+
+
+
     // getSmt(res) {
     //     super._checkResult(res);
     // }
@@ -21,12 +49,7 @@ class MainApi extends Api {
     // }
 
 
-    getAllMovies() {
-        return fetch(`${this._serverUrl}`, {
-            method: 'GET',
-        })
-            .then(this._checkResult);
-    }
+
 
     // updateUserInfo(newName, newDescription) {
     //     return fetch(`${this._serverUrl}/users/me`, {

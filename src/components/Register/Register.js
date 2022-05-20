@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import Auth from "../Auth/Auth";
 import {useEffect, useState} from "react";
 
-function Register() {
+function Register({onRegisterUser}) {
 
     const [email, setEmail] = useState('');
     const [emailInputValidity, setEmailInputValidity] = useState(false);
@@ -67,6 +67,9 @@ function Register() {
 
     function handleSubmit(event) {
         event.preventDefault();
+
+        console.log('отправляем на апи', name, email, password);
+        onRegisterUser(name, email, password);
     }
 
     return (

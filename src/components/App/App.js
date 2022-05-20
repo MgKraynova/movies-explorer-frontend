@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import Main from "../Main/Main";
 import Register from '../Register/Register';
 import Login from "../Login/Login";
@@ -8,12 +8,15 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import {useState} from "react";
 import moviesApi from "../../utils/MoviesApi";
+import mainApi from "../../utils/MainApi";
 
 function App() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [isApiError, setIsApiError] = useState(false);
     const [allMovies, setAllMovies] = useState(null);
+
+    const navigate = useNavigate();
 
     function handleApiError(err) {
         console.log('Запрос не выполнен: ', err);
@@ -39,6 +42,17 @@ function App() {
             })
     }
 
+    function handleRegisterUser(name, email, password) {
+        mainApi.registerNewUser(name, email, password)
+            .then((res) => {
+                console.log('получили ответ от сервера', res);
+                navigate('/movies');
+            })
+            .catch((err) => {
+                handleApiError(err);
+                // todo ошибки д отображаться на стр.
+            })
+    }
 
 
     return (
@@ -46,7 +60,7 @@ function App() {
             <Routes>
                 <Route index path="/" element={<Main />} />
                 <Route path="/signin" element={<Login />} />
-                <Route path="/signup" element={<Register />} />
+                <Route path="/signup" element={<Register onRegisterUser={handleRegisterUser} />} />
                 <Route path="/movies" element={<Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
                                                        isApiError={isApiError} allMovies={allMovies} />} />
                 <Route path="/saved-movies" element={<SavedMovies />} />
