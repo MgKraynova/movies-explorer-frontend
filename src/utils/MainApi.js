@@ -33,6 +33,20 @@ class MainApi extends Api {
             .then(this._checkResult);
     }
 
+    loginUser(email, password) {
+        return fetch(`${this._serverUrl}/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "password": password,
+                "email": email
+            })
+        })
+            .then(this._checkResult);
+    }
+
 
 
     // getSmt(res) {

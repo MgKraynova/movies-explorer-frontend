@@ -1,13 +1,15 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Header from "../Header/Header";
 import './profile.css';
 import Button from "../Button/Button";
 import '../Link/link.css';
 import {useState} from "react";
 
-function Profile() {
+function Profile({setLoggedIn, setCurrentUser}) {
 
     const [isEditModeOn, setIsEditModeOn] = useState(false);
+
+    const navigate = useNavigate();
 
     function handleEditButton() {
         setIsEditModeOn(true);
@@ -18,15 +20,22 @@ function Profile() {
         setIsEditModeOn(false);
     }
 
-    const profileLinks = <><button onClick={handleEditButton} type="button"
+    function signOut() {
+        setLoggedIn(false);
+        setCurrentUser({});
+        localStorage.clear();
+        navigate('/');
+    }
+
+    const profileLinks = (<><button onClick={handleEditButton} type="button"
                                            className="profile__link profile__link_type_ordinary">Редактировать</button>
-        <Link to="/" type="button" className="profile__link link profile__link_type_stressed">Выйти из аккаунта</Link>
-    </>
+        <Link to="/" type="button" onClick={signOut} className="profile__link link profile__link_type_stressed">Выйти из аккаунта</Link>
+    </>)
 
 
-    const profileButton = <><span className="profile__error">При обновлении профиля произошла ошибка.</span>
+    const profileButton = (<><span className="profile__error">При обновлении профиля произошла ошибка.</span>
         <Button ButtonText={'Сохранить'} buttonSize={'big'} />
-    </>
+    </>)
 
     return (
         <>

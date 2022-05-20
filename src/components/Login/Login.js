@@ -2,7 +2,7 @@ import Auth from "../Auth/Auth";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-function Login() {
+function Login({onLoginUser}) {
 
     const [email, setEmail] = useState('');
     const [emailInputValidity, setEmailInputValidity] = useState(false);
@@ -48,6 +48,9 @@ function Login() {
 
     function handleSubmit(event) {
         event.preventDefault();
+
+        console.log('отправляем на апи', email, password);
+        onLoginUser(email, password);
     }
 
     return (

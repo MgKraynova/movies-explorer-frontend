@@ -68,7 +68,7 @@ function Register({onRegisterUser}) {
     function handleSubmit(event) {
         event.preventDefault();
 
-        console.log('отправляем на апи', name, email, password);
+        console.log('отправляем на апи', name, email, password); //todo delete
         onRegisterUser(name, email, password);
     }
 

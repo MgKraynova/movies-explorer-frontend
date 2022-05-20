@@ -9,14 +9,19 @@ import Profile from "../Profile/Profile";
 import {useState} from "react";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
+import {useContext} from "react";
 
 function App() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [isApiError, setIsApiError] = useState(false);
     const [allMovies, setAllMovies] = useState(null);
+    const [currentUser, setCurrentUser] = useState({});
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const navigate = useNavigate();
+    // const CurrentUserContext = useContext(currentUser);
+
 
     function handleApiError(err) {
         console.log('Запрос не выполнен: ', err);
@@ -46,11 +51,41 @@ function App() {
         mainApi.registerNewUser(name, email, password)
             .then((res) => {
                 console.log('получили ответ от сервера', res);
-                navigate('/movies');
+                setCurrentUser(res); // todo строки email, name, _id
+
+                mainApi.loginUser(email, password)
+                    .then((res) => {
+                        if (res.token) {
+                            localStorage.setItem('token', res.token);
+                            console.log('получили ответ', res);
+                            console.log('получили токен', res.token);
+                            setLoggedIn(true);
+                            navigate('/movies');
+                        }
+                    })
+                    .catch((err) => {
+                        handleApiError(err);
+                    })
             })
             .catch((err) => {
                 handleApiError(err);
                 // todo ошибки д отображаться на стр.
+            })
+    }
+
+    function handleLoginUser(email, password) {
+        mainApi.loginUser(email, password)
+            .then((res) => {
+                if (res.token) {
+                    localStorage.setItem('token', res.token);
+                    console.log('получили ответ', res);
+                    console.log('получили токен', res.token);
+                    setLoggedIn(true);
+                    navigate('/movies');
+                }
+            })
+            .catch((err) => {
+                handleApiError(err);
             })
     }
 
@@ -59,18 +94,16 @@ function App() {
         <>
             <Routes>
                 <Route index path="/" element={<Main />} />
-                <Route path="/signin" element={<Login />} />
+                <Route path="/signin" element={<Login onLoginUser={handleLoginUser} />} />
                 <Route path="/signup" element={<Register onRegisterUser={handleRegisterUser} />} />
                 <Route path="/movies" element={<Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
                                                        isApiError={isApiError} allMovies={allMovies} />} />
                 <Route path="/saved-movies" element={<SavedMovies />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser}/>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
             {/*<Footer />*/}
-
-
-
+            {/*//todo delete*/}
         </>
     )
 
