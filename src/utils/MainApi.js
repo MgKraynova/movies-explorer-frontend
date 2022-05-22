@@ -59,6 +59,18 @@ class MainApi extends Api {
             .then(this._checkResult);
     }
 
+    updateUserInfo(name, email) {
+        return fetch(`${this._serverUrl}/users/me`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: name,
+                email: email
+            })
+        })
+            .then(this._checkResult);
+    }
+
     // getSmt(res) {
     //     super._checkResult(res);
     // }

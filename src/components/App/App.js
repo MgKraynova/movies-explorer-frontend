@@ -22,10 +22,11 @@ function App() {
     const [currentUser, setCurrentUser] = useState({});
     const [loggedIn, setLoggedIn] = useState(false);
 
+    const [isErrorOnUpdateProfile, setIsErrorOnUpdateProfile] = useState(false);
+
     const navigate = useNavigate();
 
-    console.log('currentUser', currentUser);
-    console.log('loggedIn', loggedIn);
+    console.log('currentUser', currentUser); //todo delete
 
     useEffect(() => {
         checkToken();
@@ -113,8 +114,6 @@ function App() {
 
     function checkToken() {
         if (localStorage.getItem('token')) {
-            const token = localStorage.getItem('token');
-
             mainApi.updateTokenInHeaders();
 
             mainApi.getUserInfo()
@@ -128,6 +127,21 @@ function App() {
         }
     }
 
+    function handleUpdateUser(name, email) {
+        console.log('в handleUpdateUser передаем', name, email);
+        mainApi.updateUserInfo(name, email)
+            .then((res) => {
+                console.log('получили обновленные данные', res);
+                setCurrentUser(res);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsErrorOnUpdateProfile(true);
+                console.log('IsErrorOnUpdateProfile', isErrorOnUpdateProfile);
+                handleApiError(err);
+            })
+    }
+
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
@@ -138,7 +152,7 @@ function App() {
                     <Route path="/movies" element={<Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
                                                            isApiError={isApiError} allMovies={allMovies} />} />
                     <Route path="/saved-movies" element={<SavedMovies />} />
-                    <Route path="/profile" element={<Profile setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser}/>} />
+                    <Route path="/profile" element={<Profile setIsErrorOnUpdateProfile={setIsErrorOnUpdateProfile} isErrorOnUpdateProfile={isErrorOnUpdateProfile} onUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser}/>} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 {/*<Footer />*/}
