@@ -21,6 +21,7 @@ function App() {
     const [isApiError, setIsApiError] = useState(false);
     const [allMovies, setAllMovies] = useState(null);
     const [savedMovies, setSavedMovies] = useState(null);
+    const [filteredMovies, setFilteredMovies] = useState(null);
     const [currentUser, setCurrentUser] = useState({});
     const [loggedIn, setLoggedIn] = useState(false);
 
@@ -28,9 +29,9 @@ function App() {
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     checkToken();
-    // }, []);
+    useEffect(() => {
+        checkToken();
+    }, []); //todo вроде не нужна можно удалить
 
     useEffect(() => {
         if (!loggedIn) {
@@ -58,6 +59,7 @@ function App() {
         moviesApi.getAllMovies()
             .then((res) => {
                 if (res) {
+                    getAllSavedMovies();
                     localStorage.setItem('allMovies', JSON.stringify(res));
                     setAllMovies(res);
                 }
@@ -101,8 +103,6 @@ function App() {
             .then((res) => {
                 if (res.token) {
                     localStorage.setItem('token', res.token);
-                    console.log('получили ответ', res);
-                    console.log('получили токен', res.token);
                     setLoggedIn(true);
                     navigate('/movies');
                 }
@@ -194,6 +194,7 @@ function App() {
                         <Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
                                 isApiError={isApiError} allMovies={allMovies}
                                 onSaveMovie={handleSaveMovie} onDeleteMovie={handleDeleteMovie}
+                                setFilteredMovies={setFilteredMovies} filteredMovies={filteredMovies}
                                 />
                     </ProtectedRoute>}/>
                 <Route path="/saved-movies" element={
@@ -205,7 +206,7 @@ function App() {
                         <Profile setIsErrorOnUpdateProfile={setIsErrorOnUpdateProfile}
                                  isErrorOnUpdateProfile={isErrorOnUpdateProfile}
                                  onUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn}
-                                 setCurrentUser={setCurrentUser}/>
+                                 setCurrentUser={setCurrentUser} setAllMovies={setAllMovies} setSavedMovies={setSavedMovies}/>
                     </ProtectedRoute>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

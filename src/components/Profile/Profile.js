@@ -6,7 +6,8 @@ import Button from "../Button/Button";
 import '../Link/link.css';
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProfile, setIsErrorOnUpdateProfile}) {
+function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProfile, setIsErrorOnUpdateProfile, setAllMovies,
+setSavedMovies}) {
 
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -91,6 +92,8 @@ function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProf
     function signOut() {
         setLoggedIn(false);
         setCurrentUser({});
+        setAllMovies(null);
+        setSavedMovies(null);
         localStorage.clear();
         navigate('/');
     }

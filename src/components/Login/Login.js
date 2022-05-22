@@ -49,7 +49,6 @@ function Login({onLoginUser}) {
     function handleSubmit(event) {
         event.preventDefault();
 
-        console.log('отправляем на апи', email, password);
         onLoginUser(email, password);
     }
 

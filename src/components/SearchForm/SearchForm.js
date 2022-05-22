@@ -3,7 +3,7 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import FilterMovies from '../FilterMovies/FilterMovies';
 import {useEffect, useState} from "react";
 
-function SearchForm({onSubmitSearch, isLoading}) {
+function SearchForm({onSubmitSearch, isLoading, setFilteredMovies}) {
 
     const [inputValidity, setInputValidity] = useState(false);
     const [isErrorShown, setIsErrorShown] = useState(false);
@@ -23,7 +23,6 @@ function SearchForm({onSubmitSearch, isLoading}) {
 
     function handleInputChange(event) {
         setInputValue(event.target.value);
-        setIsErrorShown(false);
         setInputValidity(event.target.validity.valid);
 
         if (!event.target.validity.valid || event.target.value.length < 2) {
@@ -52,7 +51,9 @@ function SearchForm({onSubmitSearch, isLoading}) {
             localStorage.removeItem('isMovieListButtonMoreShown');
 
             if (localStorage.getItem('allMovies')) {
-                FilterMovies(JSON.parse(localStorage.getItem('allMovies')), inputValue, isCheckboxChecked);
+                const moviesAfterFiltration = FilterMovies(JSON.parse(localStorage.getItem('allMovies')),
+                    inputValue, isCheckboxChecked);
+                setFilteredMovies(moviesAfterFiltration);
             } else {
                 onSubmitSearch();
             }
@@ -72,7 +73,7 @@ function SearchForm({onSubmitSearch, isLoading}) {
                 disabled={isLoading}
                 value={inputValue}
                 />
-                <button disabled={isLoading || isButtonDisabled} className={`search__button ${isLoading || isButtonDisabled && 'search__button_disabled'}`} type="submit">Найти</button>
+                <button disabled={(isLoading || isButtonDisabled)} className={`search__button ${(isLoading || isButtonDisabled) && 'search__button_disabled'}`} type="submit">Найти</button>
                 <span className="search__error">{isErrorShown && 'Нужно ввести ключевое слово'}</span>
             </form>
             <div className="search__container">
