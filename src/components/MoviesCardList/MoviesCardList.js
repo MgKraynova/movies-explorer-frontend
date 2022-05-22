@@ -13,7 +13,7 @@ import {
     NUMBER_OF_ADDITIONAL_MOVIES_AT_PHONES
 } from '../../utils/config';
 
-function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie}) {
+function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie, onDeleteMovie, savedMovies}) {
 
     // localStorage.clear(); //todo delete
 
@@ -64,7 +64,8 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie}) {
 
             setContent(<ul className="movies__list list">
                 {JSON.parse(localStorage.getItem('movieList')).map((movie) => {
-                    return <MoviesCard onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
+                    return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
+                                       onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
                 })}
             </ul>);
 
@@ -80,7 +81,8 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie}) {
 
             setContent(<ul className="movies__list list">
                 {allMovies.slice(0, numberOfMoviesAtPage).map((movie) => {
-                    return <MoviesCard onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
+                    return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
+                                       onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
                 })}
             </ul>);
 
@@ -107,7 +109,8 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie}) {
             console.log('запускаем отрисовку новых карточек');
             const movieListElement = <ul className="movies__list list">
                 {movieList.map((movie) => {
-                    return <MoviesCard onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
+                    return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
+                                       onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
                 })}
             </ul>;
 

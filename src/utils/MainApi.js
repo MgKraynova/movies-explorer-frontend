@@ -79,6 +79,15 @@ class MainApi extends Api {
             .then(this._checkResult);
     }
 
+    deleteMovie(id) {
+        console.log('обращаемся по адресу', `${this._serverUrl}/movies/${id}`);
+        return fetch(`${this._serverUrl}/movies/${id}`, {
+            method: 'DELETE',
+            headers: this._headers,
+        })
+            .then(this._checkResult);
+    }
+
     // getSmt(res) {
     //     super._checkResult(res);
     // }

@@ -20,6 +20,7 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [isApiError, setIsApiError] = useState(false);
     const [allMovies, setAllMovies] = useState(null);
+    const [savedMovies, setSavedMovies] = useState([]);
     const [currentUser, setCurrentUser] = useState({});
     const [loggedIn, setLoggedIn] = useState(false);
 
@@ -149,6 +150,18 @@ function App() {
             movieId, nameRU, nameEN)
             .then((res) => {
                 console.log('получили данные movie', res);
+                setSavedMovies([...savedMovies, res]);
+            })
+            .catch((err) => {
+                handleApiError(err);
+            })
+    }
+
+    function handleDeleteMovie(id) {
+        mainApi.deleteMovie(id)
+            .then((res) => {
+                console.log('удалили movie', res);
+                setSavedMovies(savedMovies.filter((movie) => !(movie._id === id)));
             })
             .catch((err) => {
                 handleApiError(err);
@@ -166,7 +179,8 @@ function App() {
                     <ProtectedRoute>
                         <Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
                                 isApiError={isApiError} allMovies={allMovies}
-                                onSaveMovie={handleSaveMovie}/>
+                                onSaveMovie={handleSaveMovie} onDeleteMovie={handleDeleteMovie}
+                                savedMovies={savedMovies}/>
                     </ProtectedRoute>}/>
                 <Route path="/saved-movies" element={
                     <ProtectedRoute>

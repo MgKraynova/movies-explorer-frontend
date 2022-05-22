@@ -3,7 +3,7 @@ import './card.css';
 import '../Link/link.css';
 import {useState} from "react";
 
-function MoviesCard({movie, onSaveMovie}) {
+function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
 
     const location = useLocation();
 
@@ -13,13 +13,21 @@ function MoviesCard({movie, onSaveMovie}) {
     const cardDeleteButtonClassName = ('card__button card__button_type_delete');
 
     function handleButtonClick() {
-        setIsLiked(!isLiked);
         const movieImage = 'https://api.nomoreparties.co' + movie.image.url;
         const movieThumbnail = 'https://api.nomoreparties.co' + movie.image.formats.thumbnail.url;
-        console.log('movieImage', movieImage);
 
-        onSaveMovie(movie.country, movie.director, movie.duration, movie.year, movie.description, movieImage,
-            movie.trailerLink, movieThumbnail, movie.id, movie.nameRU, movie.nameEN);
+        if (isLiked) {
+            const savedMovie = savedMovies.filter((savedMovie) => movie.id === savedMovie.movieId)[0];
+            console.log('все сохраненные фильмы', savedMovies);
+            console.log('вычислили id охраненного фильма', savedMovie._id);
+            if (savedMovie) {
+                onDeleteMovie(savedMovie._id);
+            }
+        } else {
+            onSaveMovie(movie.country, movie.director, movie.duration, movie.year, movie.description, movieImage,
+                movie.trailerLink, movieThumbnail, movie.id, movie.nameRU, movie.nameEN);
+        }
+        setIsLiked(!isLiked);
     }
 
     return (
