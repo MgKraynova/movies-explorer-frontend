@@ -61,7 +61,6 @@ function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProf
 
         if (!event.target.validity.valid || currentUser.name === event.target.value) {
             setShowNameInputError(true);
-            console.log('показываем ошибку', showNameInputError);
         } else {
             setShowNameInputError(false);
         }
@@ -77,12 +76,6 @@ function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProf
         } else {
             setShowEmailInputError(false);
         }
-
-        // if (currentUser.email === event.target.value) {
-        //     setShowEmailInputError(true);
-        // } else {
-        //     setShowEmailInputError(false);
-        // }
     }
 
     function handleEditButton() {
