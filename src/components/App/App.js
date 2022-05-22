@@ -143,6 +143,18 @@ function App() {
             })
     }
 
+    function handleSaveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
+                             movieId, nameRU, nameEN) {
+        mainApi.saveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
+            movieId, nameRU, nameEN)
+            .then((res) => {
+                console.log('получили данные movie', res);
+            })
+            .catch((err) => {
+                handleApiError(err);
+            })
+    }
+
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
@@ -153,10 +165,11 @@ function App() {
                 <Route path="/movies" element={
                     <ProtectedRoute>
                         <Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
-                                isApiError={isApiError} allMovies={allMovies}/>
+                                isApiError={isApiError} allMovies={allMovies}
+                                onSaveMovie={handleSaveMovie}/>
                     </ProtectedRoute>}/>
                 <Route path="/saved-movies" element={
-                    <ProtectedRoute >
+                    <ProtectedRoute>
                         <SavedMovies/>
                     </ProtectedRoute>}/>
                 <Route path="/profile" element={

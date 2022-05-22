@@ -3,7 +3,7 @@ import './card.css';
 import '../Link/link.css';
 import {useState} from "react";
 
-function MoviesCard({movie}) {
+function MoviesCard({movie, onSaveMovie}) {
 
     const location = useLocation();
 
@@ -14,6 +14,12 @@ function MoviesCard({movie}) {
 
     function handleButtonClick() {
         setIsLiked(!isLiked);
+        const movieImage = 'https://api.nomoreparties.co' + movie.image.url;
+        const movieThumbnail = 'https://api.nomoreparties.co' + movie.image.formats.thumbnail.url;
+        console.log('movieImage', movieImage);
+
+        onSaveMovie(movie.country, movie.director, movie.duration, movie.year, movie.description, movieImage,
+            movie.trailerLink, movieThumbnail, movie.id, movie.nameRU, movie.nameEN);
     }
 
     return (

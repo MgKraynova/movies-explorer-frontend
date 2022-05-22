@@ -8,17 +8,6 @@ class MainApi extends Api {
         this._headers = headers;
     }
 
-
-    // getUserInfo() {
-    //     return fetch(`${this._serverUrl}/users/me `, {
-    //         method: 'GET',
-    //         headers: this._headers
-    //     })
-    //         .then(this._checkResult);
-    // }
-
-
-
     registerNewUser(name, email, password) {
         return fetch(`${this._serverUrl}/signup`, {
             method: 'POST',
@@ -66,6 +55,25 @@ class MainApi extends Api {
             body: JSON.stringify({
                 name: name,
                 email: email
+            })
+        })
+            .then(this._checkResult);
+    }
+
+    saveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
+              movieId, nameRU, nameEN) {
+        // console.log('отправляем на сервер', {
+        //     country: country, director: director, duration: duration, year: year,
+        //     description: description, image: image, trailerLink: trailerLink, thumbnail: thumbnail,
+        //     movieId: movieId, nameRU: nameRU, nameEN: nameEN
+        // }) //todo delete
+        return fetch(`${this._serverUrl}/movies`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({
+                country: country, director: director, duration: duration, year: year,
+                description: description, image: image, trailerLink: trailerLink, thumbnail: thumbnail,
+                movieId : movieId, nameRU: nameRU, nameEN: nameEN
             })
         })
             .then(this._checkResult);
