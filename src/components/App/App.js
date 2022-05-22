@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {Route, Routes, useNavigate} from 'react-router-dom';
+import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
@@ -13,6 +13,7 @@ import Profile from "../Profile/Profile";
 
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
+import ProtectedRoute from "../ProtectedRoute";
 
 function App() {
 
@@ -145,18 +146,28 @@ function App() {
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
-        <Routes>
-                    <Route index path="/" element={<Main />} />
-                    <Route path="/signin" element={<Login onLoginUser={handleLoginUser} />} />
-                    <Route path="/signup" element={<Register onRegisterUser={handleRegisterUser} />} />
-                    <Route path="/movies" element={<Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
-                                                           isApiError={isApiError} allMovies={allMovies} />} />
-                    <Route path="/saved-movies" element={<SavedMovies />} />
-                    <Route path="/profile" element={<Profile setIsErrorOnUpdateProfile={setIsErrorOnUpdateProfile} isErrorOnUpdateProfile={isErrorOnUpdateProfile} onUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser}/>} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-                {/*<Footer />*/}
-                {/*//todo delete*/}
+            <Routes>
+                <Route index path="/" element={<Main/>}/>
+                <Route path="/signin" element={<Login onLoginUser={handleLoginUser}/>}/>
+                <Route path="/signup" element={<Register onRegisterUser={handleRegisterUser}/>}/>
+                <Route path="/movies" element={
+                    <ProtectedRoute>
+                        <Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
+                                isApiError={isApiError} allMovies={allMovies}/>
+                    </ProtectedRoute>}/>
+                <Route path="/saved-movies" element={
+                    <ProtectedRoute >
+                        <SavedMovies/>
+                    </ProtectedRoute>}/>
+                <Route path="/profile" element={
+                    <ProtectedRoute>
+                        <Profile setIsErrorOnUpdateProfile={setIsErrorOnUpdateProfile}
+                                 isErrorOnUpdateProfile={isErrorOnUpdateProfile}
+                                 onUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn}
+                                 setCurrentUser={setCurrentUser}/>
+                    </ProtectedRoute>}/>
+                <Route path="*" element={<NotFound/>}/>
+            </Routes>
         </CurrentUserContext.Provider>
     )
 
