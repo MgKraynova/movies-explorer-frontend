@@ -1,5 +1,6 @@
 import './search.css';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+import FilterMovies from '../FilterMovies/FilterMovies';
 import {useEffect, useState} from "react";
 
 function SearchForm({onSubmitSearch, isLoading}) {
@@ -8,6 +9,7 @@ function SearchForm({onSubmitSearch, isLoading}) {
     const [isErrorShown, setIsErrorShown] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(inputValidity);
 
     useEffect(() => {
         if (localStorage.getItem('searchRequest')) {
@@ -23,6 +25,14 @@ function SearchForm({onSubmitSearch, isLoading}) {
         setInputValue(event.target.value);
         setIsErrorShown(false);
         setInputValidity(event.target.validity.valid);
+
+        if (!event.target.validity.valid || event.target.value.length < 2) {
+            setIsErrorShown(true);
+            setIsButtonDisabled(true);
+        } else {
+            setIsErrorShown(false);
+            setIsButtonDisabled(false);
+        }
     }
 
     function handleCheckboxClick() {
@@ -33,10 +43,7 @@ function SearchForm({onSubmitSearch, isLoading}) {
     function handleSubmitForm(event) {
         event.preventDefault();
 
-        if (!inputValidity || inputValue.length === 0) {
-            setIsErrorShown(true);
-        } else {
-            setIsErrorShown(false);
+        if (inputValidity && !isErrorShown) {
 
             localStorage.setItem('searchRequest', inputValue);
             localStorage.setItem('isCheckboxChecked', JSON.stringify(isCheckboxChecked));
@@ -44,7 +51,12 @@ function SearchForm({onSubmitSearch, isLoading}) {
             localStorage.removeItem('movieList');
             localStorage.removeItem('isMovieListButtonMoreShown');
 
-            onSubmitSearch(); // todo Не выполняются лишние запросы к бэкенду, например:
+            if (localStorage.getItem('allMovies')) {
+                FilterMovies(JSON.parse(localStorage.getItem('allMovies')), inputValue, isCheckboxChecked);
+            } else {
+                onSubmitSearch();
+            }
+             // todo Не выполняются лишние запросы к бэкенду, например:
             // запрос всех фильмов с сервиса beatfilm-movies производится только при первом поиске;
         }
     }
@@ -60,7 +72,7 @@ function SearchForm({onSubmitSearch, isLoading}) {
                 disabled={isLoading}
                 value={inputValue}
                 />
-                <button disabled={isLoading} className={`search__button ${isLoading && 'search__button_disabled'}`} type="submit">Найти</button>
+                <button disabled={isLoading || isButtonDisabled} className={`search__button ${isLoading || isButtonDisabled && 'search__button_disabled'}`} type="submit">Найти</button>
                 <span className="search__error">{isErrorShown && 'Нужно ввести ключевое слово'}</span>
             </form>
             <div className="search__container">

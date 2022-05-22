@@ -46,6 +46,21 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie, onDelete
     }, [windowWidth])
 
     useEffect(() => {
+        if (location.pathname === '/saved-movies') {
+
+            if (localStorage.getItem('savedMovies')) {
+                setContent(<ul className="movies__list list">
+                    {JSON.parse(localStorage.getItem('savedMovies')).map((movie) => {
+                        return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
+                                           onSaveMovie={onSaveMovie} key={movie.movieId} movie={movie}/>
+                    })}
+                </ul>);
+            }
+
+        }
+    }, [savedMovies]);
+
+    useEffect(() => {
         if (isLoading) {
             setContent(<Preloader/>);
         }
@@ -58,71 +73,76 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie, onDelete
     }, [isApiError]);
 
     useEffect(() => {
+        if (location.pathname === "/movies") {
+            if (JSON.parse(localStorage.getItem('movieList')) &&
+                JSON.parse(localStorage.getItem('isMovieListButtonMoreShown'))) {
 
-        if (JSON.parse(localStorage.getItem('movieList')) &&
-            JSON.parse(localStorage.getItem('isMovieListButtonMoreShown'))) {
+                setContent(<ul className="movies__list list">
+                    {JSON.parse(localStorage.getItem('movieList')).map((movie) => {
+                        return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
+                                           onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
+                    })}
+                </ul>);
 
-            setContent(<ul className="movies__list list">
-                {JSON.parse(localStorage.getItem('movieList')).map((movie) => {
-                    return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
-                                       onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
-                })}
-            </ul>);
+                setIsButtonShown(JSON.parse(localStorage.getItem('isMovieListButtonMoreShown')));
+            } else if (allMovies) {
 
-            setIsButtonShown(JSON.parse(localStorage.getItem('isMovieListButtonMoreShown')));
-        } else if (allMovies) {
+                if (allMovies.length === 0) {
+                    setContent(notFoundMessage);
+                    return;
+                }
 
-            if (allMovies.length === 0) {
-                setContent(notFoundMessage);
-                return;
+                setContent(null);
+
+                setContent(<ul className="movies__list list">
+                    {allMovies.slice(0, numberOfMoviesAtPage).map((movie) => {
+                        return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
+                                           onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
+                    })}
+                </ul>);
+
+                localStorage.setItem('movieList', JSON.stringify(allMovies.slice(0, numberOfMoviesAtPage)));
+
+                setIsButtonShown(true);
+
+                localStorage.setItem('isMovieListButtonMoreShown', JSON.stringify(isButtonShown));
+
+                setNumberOfMoviesAtPage(numberOfMoviesAtPage + numberOfAdditionalMovies);
             }
-
-            setContent(null);
-
-            setContent(<ul className="movies__list list">
-                {allMovies.slice(0, numberOfMoviesAtPage).map((movie) => {
-                    return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
-                                       onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
-                })}
-            </ul>);
-
-            localStorage.setItem('movieList', JSON.stringify(allMovies.slice(0, numberOfMoviesAtPage)));
-
-            setIsButtonShown(true);
-
-            localStorage.setItem('isMovieListButtonMoreShown', JSON.stringify(isButtonShown));
-
-            setNumberOfMoviesAtPage(numberOfMoviesAtPage + numberOfAdditionalMovies);
         }
     }, [allMovies, windowWidth]);
 
     useEffect(() => {
-        if (allMovies) {
-            setMovieList(allMovies.slice(0, numberOfMoviesAtPage));
+        if (location.pathname === "/movies") {
+            if (allMovies) {
+                setMovieList(allMovies.slice(0, numberOfMoviesAtPage));
+            }
         }
     }, [numberOfMoviesAtPage]);
 
     function handleButtonClick() {
-        setNumberOfMoviesAtPage(numberOfMoviesAtPage + numberOfAdditionalMovies);
+        if (location.pathname === "/movies") {
+            setNumberOfMoviesAtPage(numberOfMoviesAtPage + numberOfAdditionalMovies);
 
-        if (movieList && movieList.length > 0) {
-            console.log('запускаем отрисовку новых карточек');
-            const movieListElement = <ul className="movies__list list">
-                {movieList.map((movie) => {
-                    return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
-                                       onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
-                })}
-            </ul>;
+            if (movieList && movieList.length > 0) {
+                console.log('запускаем отрисовку новых карточек');
+                const movieListElement = <ul className="movies__list list">
+                    {movieList.map((movie) => {
+                        return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
+                                           onSaveMovie={onSaveMovie} key={movie.id} movie={movie}/>
+                    })}
+                </ul>;
 
-            setContent(movieListElement);
+                setContent(movieListElement);
 
-            localStorage.setItem('movieList', JSON.stringify(movieList));
-        }
+                localStorage.setItem('movieList', JSON.stringify(movieList));
+            }
 
-        if (allMovies && numberOfMoviesAtPage >  allMovies.length) {
-            setIsButtonShown(false);
+            if (allMovies && numberOfMoviesAtPage >  allMovies.length) {
+                setIsButtonShown(false);
 
-            localStorage.setItem('isMovieListButtonMoreShown', JSON.stringify(isButtonShown));
+                localStorage.setItem('isMovieListButtonMoreShown', JSON.stringify(isButtonShown));
+            }
         }
     }
 

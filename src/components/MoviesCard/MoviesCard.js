@@ -17,7 +17,10 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
         const movieThumbnail = 'https://api.nomoreparties.co' + movie.image.formats.thumbnail.url;
 
         if (isLiked) {
-            const savedMovie = savedMovies.filter((savedMovie) => movie.id === savedMovie.movieId)[0];
+            // const savedMovie = savedMovies.filter((savedMovie) => movie.id === savedMovie.movieId)[0];
+            // поменяла savedMovies на LocalStrorage
+            const savedMovie = JSON.parse(localStorage.getItem('savedMovies')).filter((savedMovie) =>
+                movie.id === savedMovie.movieId)[0];
             console.log('все сохраненные фильмы', savedMovies);
             console.log('вычислили id охраненного фильма', savedMovie._id);
             if (savedMovie) {
@@ -30,6 +33,21 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
         setIsLiked(!isLiked);
     }
 
+    function handleDeleteButtonClick() {
+        // const movieId = movie.movieId;
+        // const movieForDelete = savedMovies.filter((item) => {
+        //     console.log('item.movieId', item.movieId, 'movie.id', movieId);
+        //     return item.movieId = movieId;
+        // });
+
+        console.log('отобрали нужный для удаления фильм', movie);
+        onDeleteMovie(movie._id);
+        // console.log('вычислили id охраненного фильма', savedMovie._id);
+        // if (savedMovie) {
+        //     onDeleteMovie(savedMovie._id);
+        // }
+    }
+
     return (
         <li className="card">
             <div className="card__wrapper">
@@ -39,10 +57,12 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
                 </div>
                 <button type="button" className={location.pathname === "/movies"
                     ? cardSaveButtonClassName
-                    : cardDeleteButtonClassName} onClick={handleButtonClick}/>
+                    : cardDeleteButtonClassName}
+                        onClick={location.pathname === "/movies" ? handleButtonClick : handleDeleteButtonClick}/>
             </div>
             <a className="link" href={movie.trailerLink}>
-                <img className="card__image" src={'https://api.nomoreparties.co/' + movie.image.url}
+                <img className="card__image"
+                     src={movie.image.url ? 'https://api.nomoreparties.co/' + movie.image.url : movie.image}
                      alt={movie.nameRU}/>
             </a>
         </li>

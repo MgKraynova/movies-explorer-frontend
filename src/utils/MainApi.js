@@ -88,6 +88,14 @@ class MainApi extends Api {
             .then(this._checkResult);
     }
 
+    getAllSavedMovies() {
+        return fetch(`${this._serverUrl}/movies`, {
+            method: 'GET',
+            headers: this._headers,
+        })
+            .then(this._checkResult);
+    }
+
     // getSmt(res) {
     //     super._checkResult(res);
     // }

@@ -20,7 +20,7 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [isApiError, setIsApiError] = useState(false);
     const [allMovies, setAllMovies] = useState(null);
-    const [savedMovies, setSavedMovies] = useState([]);
+    const [savedMovies, setSavedMovies] = useState(null);
     const [currentUser, setCurrentUser] = useState({});
     const [loggedIn, setLoggedIn] = useState(false);
 
@@ -28,11 +28,9 @@ function App() {
 
     const navigate = useNavigate();
 
-    console.log('currentUser', currentUser); //todo delete
-
-    useEffect(() => {
-        checkToken();
-    }, []);
+    // useEffect(() => {
+    //     checkToken();
+    // }, []);
 
     useEffect(() => {
         if (!loggedIn) {
@@ -150,7 +148,7 @@ function App() {
             movieId, nameRU, nameEN)
             .then((res) => {
                 console.log('получили данные movie', res);
-                setSavedMovies([...savedMovies, res]);
+                // setSavedMovies([...savedMovies, res]); //todo delete
             })
             .catch((err) => {
                 handleApiError(err);
@@ -162,6 +160,22 @@ function App() {
             .then((res) => {
                 console.log('удалили movie', res);
                 setSavedMovies(savedMovies.filter((movie) => !(movie._id === id)));
+                localStorage.setItem('savedMovies', JSON.stringify(savedMovies.filter((movie) => !(movie._id === id))));
+            })
+            .catch((err) => {
+                handleApiError(err);
+            })
+    }
+
+    function getAllSavedMovies() {
+
+        mainApi.updateTokenInHeaders();
+
+        mainApi.getAllSavedMovies()
+            .then((res) => {
+                console.log('получили сохраненные movies', res);
+                setSavedMovies(res);
+                localStorage.setItem('savedMovies', JSON.stringify(res));
             })
             .catch((err) => {
                 handleApiError(err);
@@ -180,11 +194,11 @@ function App() {
                         <Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}
                                 isApiError={isApiError} allMovies={allMovies}
                                 onSaveMovie={handleSaveMovie} onDeleteMovie={handleDeleteMovie}
-                                savedMovies={savedMovies}/>
+                                />
                     </ProtectedRoute>}/>
                 <Route path="/saved-movies" element={
                     <ProtectedRoute>
-                        <SavedMovies/>
+                        <SavedMovies onDeleteMovie={handleDeleteMovie} savedMovies={savedMovies} getAllSavedMovies={getAllSavedMovies}/>
                     </ProtectedRoute>}/>
                 <Route path="/profile" element={
                     <ProtectedRoute>
