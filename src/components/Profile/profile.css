@@ -132,6 +132,23 @@
     /*padding-top: 5px;*/
 }
 
+.profile__text {
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+    align-items: center;
+    text-align: center;
+    color: #FF3055;
+    display: none;
+}
+
+.profile__text_visible {
+    display: block;
+}
+
 @media screen and (max-width: 769px) {
     .profile {
         padding-top: 232px;

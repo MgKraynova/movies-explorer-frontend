@@ -1,5 +1,5 @@
 import {useState, useContext, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import Header from "../Header/Header";
 import './profile.css';
 import Button from "../Button/Button";
@@ -7,7 +7,7 @@ import '../Link/link.css';
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProfile, setIsErrorOnUpdateProfile, setAllMovies,
-setSavedMovies, setFilteredMovies}) {
+setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdateProfile}) {
 
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -21,7 +21,10 @@ setSavedMovies, setFilteredMovies}) {
     const [nameInputValidity, setNameInputValidity] = useState(false);
     const [showNameInputError, setShowNameInputError] = useState(false);
 
+    const [isDataUserChanged, setIsUserDataChanged] = useState(false);
+
     const navigate = useNavigate();
+    const location = useLocation();
 
     const currentUser = useContext(CurrentUserContext);
 
@@ -30,8 +33,17 @@ setSavedMovies, setFilteredMovies}) {
     const emailInputErrorText = emailInputValidity ? 'Нужно ввести новый email' : 'Введите новый корректный email';
 
     useEffect(() => {
+        setIsUserDataChanged(isSuccessOnUpdateProfile);
+    }, [isSuccessOnUpdateProfile]);
+
+    useEffect(() => {
+        setIsSuccessOnUpdateProfile(false);
+    }, [location.pathname]);
+
+    useEffect(() => {
         setName(currentUser.name || '');
         setEmail(currentUser.email || '');
+
     }, [currentUser]);
 
     useEffect(() => {
@@ -46,13 +58,13 @@ setSavedMovies, setFilteredMovies}) {
     }, [isErrorOnUpdateProfile]);
 
     useEffect(() => {
-
         if (nameInputValidity && emailInputValidity && !(name === currentUser.name) && !(email === currentUser.email)) {
             setIsButtonDisabled(false);
         } else {
             setIsButtonDisabled(true);
         }
 
+        setIsSuccessOnUpdateProfile(false);
     }, [email, name]);
 
     function handleNameInputChange(event) {
@@ -100,7 +112,9 @@ setSavedMovies, setFilteredMovies}) {
         navigate('/');
     }
 
-    const profileLinks = (<><button onClick={handleEditButton} type="button"
+    const profileLinks = (<>
+        <p className={`profile__text ${isDataUserChanged && 'profile__text_visible'}`}>Данные успешно изменены</p>
+        <button onClick={handleEditButton} type="button"
                                            className="profile__link profile__link_type_ordinary">Редактировать</button>
         <Link to="/" type="button" onClick={signOut} className="profile__link link profile__link_type_stressed">Выйти из аккаунта</Link>
     </>)

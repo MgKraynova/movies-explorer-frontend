@@ -26,6 +26,7 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
 
     const [isErrorOnUpdateProfile, setIsErrorOnUpdateProfile] = useState(false);
+    const [isSuccessOnUpdateProfile, setIsSuccessOnUpdateProfile] = useState(false);
 
     const navigate = useNavigate();
 
@@ -126,10 +127,8 @@ function App() {
     }
 
     function handleUpdateUser(name, email) {
-        console.log('в handleUpdateUser передаем', name, email);
         mainApi.updateUserInfo(name, email)
             .then((res) => {
-                console.log('получили обновленные данные', res);
                 setCurrentUser(res);
             })
             .catch((err) => {
@@ -137,6 +136,9 @@ function App() {
                 setIsErrorOnUpdateProfile(true);
                 console.log('IsErrorOnUpdateProfile', isErrorOnUpdateProfile);
                 handleApiError(err);
+            })
+            .finally(() => {
+                setIsSuccessOnUpdateProfile(true);
             })
     }
 
@@ -206,6 +208,8 @@ function App() {
                                  setCurrentUser={setCurrentUser} setAllMovies={setAllMovies}
                                  setSavedMovies={setSavedMovies}
                                  setFilteredMovies={setFilteredMovies}
+                                 isSuccessOnUpdateProfile={isSuccessOnUpdateProfile}
+                                 setIsSuccessOnUpdateProfile={setIsSuccessOnUpdateProfile}
                         />
                     </ProtectedRoute>}/>
                 <Route path="*" element={<NotFound/>}/>
