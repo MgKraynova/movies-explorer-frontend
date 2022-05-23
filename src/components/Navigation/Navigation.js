@@ -23,9 +23,10 @@ function Navigation({type, loggedIn}) {
             ${location.pathname === '/movies' && 'navigation__link_type_active'}`}
                      to="/movies">Фильмы</NavLink>
             <NavLink className={`navigation__link link ${loggedIn && 'navigation__link_color_white'}
-            ${location.pathname === '/saved-movies' && 'navigation__link_type_active'}`} to="/saved-movies">Сохраненные фильмы</NavLink>
+            ${location.pathname === '/saved-movies' && 'navigation__link_type_active'}`} to="/saved-movies">Сохраненные
+                фильмы</NavLink>
         </div>
-        <AccountButton styles={"account-button account-button_invisible link"} />
+        <AccountButton styles={"account-button account-button_invisible link"}/>
 
         <div className="burger">
             <div className="burger-icon" onClick={handleBurgerIconClick}>
@@ -45,8 +46,8 @@ function Navigation({type, loggedIn}) {
                 <ul className="burger-menu__list list">
                     <li>
                         <NavLink className={location.pathname === "/"
-                        ? "burger-menu__link link burger-menu__link_active"
-                        : "burger-menu__link link"} to="/">Главная</NavLink>
+                            ? "burger-menu__link link burger-menu__link_active"
+                            : "burger-menu__link link"} to="/">Главная</NavLink>
                     </li>
                     <li>
                         <NavLink className={location.pathname === "/movies"
@@ -59,7 +60,7 @@ function Navigation({type, loggedIn}) {
                             : "burger-menu__link link"} to="/saved-movies">Сохранённые фильмы</NavLink>
                     </li>
                 </ul>
-                <AccountButton styles={"account-button link"} />
+                <AccountButton styles={"account-button link"}/>
             </nav>
         </div>
     </nav>

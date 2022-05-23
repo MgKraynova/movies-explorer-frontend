@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
@@ -13,6 +13,7 @@ import Profile from "../Profile/Profile";
 
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
+
 import ProtectedRoute from "../../utils/ProtectedRoute";
 import RedirectToMoviesIfLoggedIn from "../../utils/RedirectToMoviesIfLoggedIn";
 
@@ -28,6 +29,9 @@ function App() {
 
     const [isErrorOnUpdateProfile, setIsErrorOnUpdateProfile] = useState(false);
     const [isSuccessOnUpdateProfile, setIsSuccessOnUpdateProfile] = useState(false);
+
+    const [isErrorOnLogin, setIsErrorOnLogin] = useState(false);
+    const [isErrorOnRegister, setIsErrorOnRegister] = useState(false);
 
     const navigate = useNavigate();
 
@@ -94,7 +98,7 @@ function App() {
             })
             .catch((err) => {
                 handleApiError(err);
-                //todo ошибки д отображаться на стр.
+                setIsErrorOnRegister(true);
             })
     }
 
@@ -109,6 +113,7 @@ function App() {
             })
             .catch((err) => {
                 handleApiError(err);
+                setIsErrorOnLogin(true);
             })
     }
 
@@ -188,14 +193,15 @@ function App() {
                 <Route index path="/" element={<Main loggedIn={loggedIn}/>}/>
                 <Route path="/signin" element={
                     <RedirectToMoviesIfLoggedIn>
-                        <Login onLoginUser={handleLoginUser}/>
+                        <Login isErrorOnLogin={isErrorOnLogin} setIsErrorOnLogin={setIsErrorOnLogin} onLoginUser={handleLoginUser}/>
                     </RedirectToMoviesIfLoggedIn>
-                    }/>
+                }/>
                 <Route path="/signup" element={
                     <RedirectToMoviesIfLoggedIn>
-                        <Register onRegisterUser={handleRegisterUser}/>
+                        <Register setIsErrorOnRegister={setIsErrorOnRegister}
+                                  isErrorOnRegister={isErrorOnRegister} onRegisterUser={handleRegisterUser}/>
                     </RedirectToMoviesIfLoggedIn>
-                    }/>
+                }/>
                 <Route path="/movies" element={
                     <ProtectedRoute>
                         <Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}

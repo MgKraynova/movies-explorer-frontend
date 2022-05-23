@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import Auth from "../Auth/Auth";
 import {useEffect, useState} from "react";
 
-function Register({onRegisterUser}) {
+function Register({onRegisterUser, isErrorOnRegister, setIsErrorOnRegister}) {
 
     const [email, setEmail] = useState('');
     const [emailInputValidity, setEmailInputValidity] = useState(false);
@@ -23,13 +23,17 @@ function Register({onRegisterUser}) {
     </p>);
 
     useEffect(() => {
+        setIsErrorOnRegister(false);
+    }, []);
 
+    useEffect(() => {
         if (passwordInputValidity && nameInputValidity && emailInputValidity) {
             setIsButtonDisabled(false);
         } else {
             setIsButtonDisabled(true);
         }
 
+        setIsErrorOnRegister(false);
     }, [email, password, name]);
 
     function handleNameInputChange(event) {
@@ -68,7 +72,6 @@ function Register({onRegisterUser}) {
     function handleSubmit(event) {
         event.preventDefault();
 
-        console.log('отправляем на апи', name, email, password); //todo delete
         onRegisterUser(name, email, password);
     }
 
@@ -78,7 +81,7 @@ function Register({onRegisterUser}) {
               caption={authCaption}
               authFormStyle={'auth__form auth__form_type_register'}
               isButtonDisabled={isButtonDisabled}
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit} isErrorOnRegister={isErrorOnRegister}
         >
             <label className="auth__label">
                 <p className="auth__input-caption">Имя</p>

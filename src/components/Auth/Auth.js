@@ -2,7 +2,7 @@ import Header from "../Header/Header";
 import './Auth.css';
 import Button from "../Button/Button";
 
-function Auth({title, ButtonText, children, caption, authFormStyle, isButtonDisabled, onSubmit}) {
+function Auth({title, ButtonText, children, caption, authFormStyle, isButtonDisabled, onSubmit, isErrorOnRegister, isErrorOnLogin}) {
     return (
         <div className="auth">
             <Header headerStyles={'header header_background_white header_type_auth-page'} />
@@ -13,6 +13,8 @@ function Auth({title, ButtonText, children, caption, authFormStyle, isButtonDisa
                         {children}
                     </fieldset>
                     <div className="auth__wrapper">
+                        {(isErrorOnRegister || isErrorOnLogin) && <p className="auth__error">При отправке данных на сервер произошла ошибка,
+                            проверьте корректность введенных значений и попробуйте еще раз</p>}
                         <Button isButtonDisabled={isButtonDisabled} buttonSize={'small'} ButtonText={ButtonText} />
                         {caption}
                     </div>

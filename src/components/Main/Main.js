@@ -10,16 +10,17 @@ import Portfolio from "../Portfolio/Portfolio";
 function Main({loggedIn}) {
     return (
         <>
-            <Header loggedIn={loggedIn} headerStyles={`header header_background_dark-blue ${loggedIn ? 'header_type_logged-in' : 'header_type_main-page'}`}
-            navigationType={loggedIn ? 'afterLoggedInMenu' : 'mainPageMenu'}/>
+            <Header loggedIn={loggedIn}
+                    headerStyles={`header header_background_dark-blue ${loggedIn ? 'header_type_logged-in' : 'header_type_main-page'}`}
+                    navigationType={loggedIn ? 'afterLoggedInMenu' : 'mainPageMenu'}/>
             <main className="main">
-                <Promo />
-                <AboutProject />
-                <Technology />
-                <StudentInfo />
-                <Portfolio />
+                <Promo/>
+                <AboutProject/>
+                <Technology/>
+                <StudentInfo/>
+                <Portfolio/>
             </main>
-            <Footer />
+            <Footer/>
         </>
     )
 }

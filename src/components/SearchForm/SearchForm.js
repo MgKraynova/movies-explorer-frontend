@@ -37,8 +37,7 @@ function SearchForm({onSubmitSearch, isLoading, setFilteredMovies, allMovies, se
     }, []);
 
     useEffect(() => {
-        if (location.pathname === '/movies')
-            updateLocalStorage();
+        if (location.pathname === '/movies') updateLocalStorage();
     }, [isCheckboxChecked]);
 
     useEffect(() => {
@@ -83,27 +82,12 @@ function SearchForm({onSubmitSearch, isLoading, setFilteredMovies, allMovies, se
             if (localStorage.getItem('allMovies')) {
                 const moviesAfterFiltration = FilterMovies(JSON.parse(localStorage.getItem('allMovies')),
                     inputValue, isCheckboxChecked);
-                console.log('isCheckboxChecked', isCheckboxChecked, 'moviesAfterFiltration',
-                    moviesAfterFiltration, 'inputValue', inputValue.length);
                 if (!(moviesAfterFiltration === undefined)) {
                     localStorage.setItem('filteredMovies', JSON.stringify(moviesAfterFiltration));
                     setFilteredMovies(moviesAfterFiltration);
                 }
             }
         }
-
-        // if (location.pathname === '/saved-movies') {
-        //     if (savedMovies) {
-        //         const moviesAfterFiltration = FilterMovies(JSON.parse(localStorage.getItem('savedMovies')),
-        //             inputValue, isCheckboxChecked);
-        //         console.log('isCheckboxChecked', isCheckboxChecked, 'moviesAfterFiltration',
-        //             moviesAfterFiltration, 'inputValue', inputValue);
-        //
-        //         if (!(moviesAfterFiltration === undefined)) {
-        //             setSavedMovies(moviesAfterFiltration);
-        //         }
-        //     }
-        // }
     }
 
     function updateLocalStorage() {
@@ -136,8 +120,8 @@ function SearchForm({onSubmitSearch, isLoading, setFilteredMovies, allMovies, se
             if (savedMovies) {
                 const moviesAfterFiltration = FilterMovies(JSON.parse(localStorage.getItem('savedMovies')),
                     inputValue, isCheckboxChecked);
-                console.log('isCheckboxChecked', isCheckboxChecked, 'moviesAfterFiltration',
-                    moviesAfterFiltration, 'inputValue', inputValue);
+                console.log('isCheckboxChecked', isCheckboxChecked, 'moviesAfterFiltration', moviesAfterFiltration,
+                    'inputValue', inputValue);
 
                 if (!(moviesAfterFiltration === undefined)) {
                     setSavedMovies(moviesAfterFiltration);
@@ -146,8 +130,7 @@ function SearchForm({onSubmitSearch, isLoading, setFilteredMovies, allMovies, se
         }
     }
 
-    return (
-        <div className="search">
+    return (<div className="search">
             <form className="search__form" onSubmit={handleSubmitForm} noValidate={true}>
                 <input
                     className="search__input"
@@ -167,8 +150,7 @@ function SearchForm({onSubmitSearch, isLoading, setFilteredMovies, allMovies, se
                 <FilterCheckbox handleCheckboxClick={handleCheckboxClick} isCheckboxChecked={isCheckboxChecked}/>
                 <p className="search__text">Короткометражки</p>
             </div>
-        </div>
-    )
+        </div>)
 }
 
 export default SearchForm;

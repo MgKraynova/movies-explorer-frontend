@@ -2,7 +2,7 @@ import Auth from "../Auth/Auth";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-function Login({onLoginUser}) {
+function Login({onLoginUser, setIsErrorOnLogin, isErrorOnLogin}) {
 
     const [email, setEmail] = useState('');
     const [emailInputValidity, setEmailInputValidity] = useState(false);
@@ -15,7 +15,10 @@ function Login({onLoginUser}) {
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     useEffect(() => {
+        setIsErrorOnLogin(false);
+    }, []);
 
+    useEffect(() => {
         if (passwordInputValidity && emailInputValidity) {
             setIsButtonDisabled(false);
         } else {
@@ -27,6 +30,7 @@ function Login({onLoginUser}) {
     function handleEmailInputChange(event) {
         setEmail(event.target.value);
         setEmailInputValidity(event.target.validity.valid);
+        setIsErrorOnLogin(false);
 
         if (!event.target.validity.valid) {
             setShowEmailInputError(true);
@@ -38,6 +42,7 @@ function Login({onLoginUser}) {
     function handlePasswordInputChange(event) {
         setPassword(event.target.value);
         setPasswordInputValidity(event.target.validity.valid);
+        setIsErrorOnLogin(false);
 
         if (!event.target.validity.valid) {
             setShowPasswordInputError(true);
@@ -59,7 +64,7 @@ function Login({onLoginUser}) {
               </p>}
               authFormStyle={'auth__form auth__form_type_login'}
               isButtonDisabled={isButtonDisabled}
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit} isErrorOnLogin={isErrorOnLogin}
         >
             <label className="auth__label">
                 <p className="auth__input-caption">E-mail</p>
