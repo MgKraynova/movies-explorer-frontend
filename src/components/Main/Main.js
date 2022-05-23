@@ -7,11 +7,11 @@ import Technology from "../Technology/Technology";
 import StudentInfo from "../StudentInfo/StudentInfo";
 import Portfolio from "../Portfolio/Portfolio";
 
-function Main() {
+function Main({loggedIn}) {
     return (
         <>
-            <Header headerStyles={'header header_background_dark-blue header_type_main-page'}
-            navigationType={'mainPageMenu'}/>
+            <Header loggedIn={loggedIn} headerStyles={`header header_background_dark-blue ${loggedIn ? 'header_type_logged-in' : 'header_type_main-page'}`}
+            navigationType={loggedIn ? 'afterLoggedInMenu' : 'mainPageMenu'}/>
             <main className="main">
                 <Promo />
                 <AboutProject />

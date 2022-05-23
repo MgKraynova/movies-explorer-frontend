@@ -185,7 +185,7 @@ function App() {
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <Routes>
-                <Route index path="/" element={<Main/>}/>
+                <Route index path="/" element={<Main loggedIn={loggedIn}/>}/>
                 <Route path="/signin" element={
                     <RedirectToMoviesIfLoggedIn>
                         <Login onLoginUser={handleLoginUser}/>
