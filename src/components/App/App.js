@@ -56,7 +56,7 @@ function App() {
     function handleApiError(err) {
         console.log('Запрос не выполнен: ', err);
         setIsApiError(true);
-    } //todo мб улучшить
+    }
 
     function getAllMoviesFromApi() {
         setIsApiError(false);
@@ -81,8 +81,7 @@ function App() {
     function handleRegisterUser(name, email, password) {
         mainApi.registerNewUser(name, email, password)
             .then((res) => {
-                console.log('получили ответ от сервера', res);
-                setCurrentUser(res); // todo строки email, name, _id
+                setCurrentUser(res);
 
                 mainApi.loginUser(email, password)
                     .then((res) => {
@@ -138,9 +137,7 @@ function App() {
                 setCurrentUser(res);
             })
             .catch((err) => {
-                console.log(err);
                 setIsErrorOnUpdateProfile(true);
-                console.log('IsErrorOnUpdateProfile', isErrorOnUpdateProfile);
                 handleApiError(err);
             })
             .finally(() => {
@@ -153,7 +150,6 @@ function App() {
         mainApi.saveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
             movieId, nameRU, nameEN)
             .then((res) => {
-                console.log('получили данные movie', res);
                 getAllSavedMovies();
             })
             .catch((err) => {
@@ -164,7 +160,6 @@ function App() {
     function handleDeleteMovie(id) {
         mainApi.deleteMovie(id)
             .then((res) => {
-                console.log('удалили movie', res);
                 getAllSavedMovies();
             })
             .catch((err) => {

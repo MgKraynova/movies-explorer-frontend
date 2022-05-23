@@ -83,7 +83,6 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
                     {renderMovieCards(filteredMovies)}
                 </ul>);
             } else if (filteredMovies && filteredMovies.length === 0) {
-                console.log('filteredMovies', filteredMovies);
                 setContent(notFoundMessage);
             }
         }

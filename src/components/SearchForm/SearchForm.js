@@ -120,8 +120,6 @@ function SearchForm({onSubmitSearch, isLoading, setFilteredMovies, allMovies, se
             if (savedMovies) {
                 const moviesAfterFiltration = FilterMovies(JSON.parse(localStorage.getItem('savedMovies')),
                     inputValue, isCheckboxChecked);
-                console.log('isCheckboxChecked', isCheckboxChecked, 'moviesAfterFiltration', moviesAfterFiltration,
-                    'inputValue', inputValue);
 
                 if (!(moviesAfterFiltration === undefined)) {
                     setSavedMovies(moviesAfterFiltration);
