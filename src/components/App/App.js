@@ -21,7 +21,7 @@ function App() {
     const [isApiError, setIsApiError] = useState(false);
     const [allMovies, setAllMovies] = useState(null);
     const [savedMovies, setSavedMovies] = useState(null);
-    const [filteredMovies, setFilteredMovies] = useState(null);
+    const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || null);
     const [currentUser, setCurrentUser] = useState({});
     const [loggedIn, setLoggedIn] = useState(false);
 
@@ -31,7 +31,7 @@ function App() {
 
     useEffect(() => {
         checkToken();
-    }, []); //todo вроде не нужна можно удалить
+    }, []);
 
     useEffect(() => {
         if (!loggedIn) {
@@ -142,13 +142,21 @@ function App() {
             })
     }
 
+    function checkMovieData(item) {
+        if (item === null) {
+            console.log('меняем значение null в', item);
+            item = 'не указано';
+            return item;
+        }
+    }
+
     function handleSaveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
                              movieId, nameRU, nameEN) {
         mainApi.saveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
             movieId, nameRU, nameEN)
             .then((res) => {
                 console.log('получили данные movie', res);
-                // setSavedMovies([...savedMovies, res]); //todo delete
+                getAllSavedMovies();
             })
             .catch((err) => {
                 handleApiError(err);
@@ -159,8 +167,9 @@ function App() {
         mainApi.deleteMovie(id)
             .then((res) => {
                 console.log('удалили movie', res);
-                setSavedMovies(savedMovies.filter((movie) => !(movie._id === id)));
-                localStorage.setItem('savedMovies', JSON.stringify(savedMovies.filter((movie) => !(movie._id === id))));
+                getAllSavedMovies();
+                // setSavedMovies(savedMovies.filter((movie) => !(movie._id === id)));
+                // localStorage.setItem('savedMovies', JSON.stringify(savedMovies.filter((movie) => !(movie._id === id))));
             })
             .catch((err) => {
                 handleApiError(err);
@@ -173,7 +182,6 @@ function App() {
 
         mainApi.getAllSavedMovies()
             .then((res) => {
-                console.log('получили сохраненные movies', res);
                 setSavedMovies(res);
                 localStorage.setItem('savedMovies', JSON.stringify(res));
             })

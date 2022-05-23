@@ -80,7 +80,6 @@ class MainApi extends Api {
     }
 
     deleteMovie(id) {
-        console.log('обращаемся по адресу', `${this._serverUrl}/movies/${id}`);
         return fetch(`${this._serverUrl}/movies/${id}`, {
             method: 'DELETE',
             headers: this._headers,

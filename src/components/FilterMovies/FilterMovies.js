@@ -2,8 +2,6 @@ export default function FilterMovies(movies, request, isCheckboxChecked) {
     let filteredMovies = [];
     if (request) {
         filteredMovies = movies.filter((movie) => {
-            // console.log('movie', movie);
-            // console.log('request.toLowerCase()', request.toLowerCase());
             if (isCheckboxChecked) {
                 return movie.nameRU.toLowerCase().includes(request.toLowerCase()) && movie.duration <= 40;
             } else {
@@ -20,6 +18,6 @@ export default function FilterMovies(movies, request, isCheckboxChecked) {
         })
     }
 
-    console.log('filteredMovies', filteredMovies);
+    console.log('filteredMovies', filteredMovies); //todo delete
     return filteredMovies;
 }

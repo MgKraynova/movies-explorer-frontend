@@ -2,6 +2,7 @@ import './search.css';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import FilterMovies from '../FilterMovies/FilterMovies';
 import {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 
 function SearchForm({onSubmitSearch, isLoading, setFilteredMovies}) {
 
@@ -11,13 +12,17 @@ function SearchForm({onSubmitSearch, isLoading, setFilteredMovies}) {
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(inputValidity);
 
-    useEffect(() => {
-        if (localStorage.getItem('searchRequest')) {
-            setInputValue(localStorage.getItem('searchRequest'));
-        }
+    const location = useLocation();
 
-        if (JSON.parse(localStorage.getItem('isCheckboxChecked'))) {
-            setIsCheckboxChecked(JSON.parse(localStorage.getItem('isCheckboxChecked')));
+    useEffect(() => {
+        if (location.pathname === '/movies') {
+            if (localStorage.getItem('searchRequest')) {
+                setInputValue(localStorage.getItem('searchRequest'));
+            }
+
+            if (JSON.parse(localStorage.getItem('isCheckboxChecked'))) {
+                setIsCheckboxChecked(JSON.parse(localStorage.getItem('isCheckboxChecked')));
+            }
         }
     }, [])
 
@@ -36,7 +41,15 @@ function SearchForm({onSubmitSearch, isLoading, setFilteredMovies}) {
 
     function handleCheckboxClick() {
         setIsCheckboxChecked(!isCheckboxChecked);
-        localStorage.setItem('isCheckboxChecked', JSON.stringify(!isCheckboxChecked));
+        updateLocalStorage();
+    }
+
+    function updateLocalStorage() {
+        localStorage.setItem('searchRequest', inputValue);
+        localStorage.setItem('isCheckboxChecked', JSON.stringify(isCheckboxChecked));
+
+        localStorage.removeItem('movieList');
+        localStorage.removeItem('isMovieListButtonMoreShown');
     }
 
     function handleSubmitForm(event) {
@@ -44,15 +57,12 @@ function SearchForm({onSubmitSearch, isLoading, setFilteredMovies}) {
 
         if (inputValidity && !isErrorShown) {
 
-            localStorage.setItem('searchRequest', inputValue);
-            localStorage.setItem('isCheckboxChecked', JSON.stringify(isCheckboxChecked));
-
-            localStorage.removeItem('movieList');
-            localStorage.removeItem('isMovieListButtonMoreShown');
+            updateLocalStorage();
 
             if (localStorage.getItem('allMovies')) {
                 const moviesAfterFiltration = FilterMovies(JSON.parse(localStorage.getItem('allMovies')),
                     inputValue, isCheckboxChecked);
+                localStorage.setItem('filteredMovies', JSON.stringify(moviesAfterFiltration));
                 setFilteredMovies(moviesAfterFiltration);
             } else {
                 onSubmitSearch();

@@ -19,9 +19,9 @@ function Navigation({type}) {
 
     const AfterLoggedInMenu = <nav className="navigation__logged-menu">
         <div className="navigation__wrapper">
-            <NavLink className="navigation__link navigation__link_type_active link"
+            <NavLink className={`navigation__link link ${location.pathname === '/movies' && 'navigation__link_type_active'}`}
                      to="/movies">Фильмы</NavLink>
-            <NavLink className="navigation__link link" to="/saved-movies">Сохраненные фильмы</NavLink>
+            <NavLink className={`navigation__link link ${location.pathname === '/saved-movies' && 'navigation__link_type_active'}`} to="/saved-movies">Сохраненные фильмы</NavLink>
         </div>
         <AccountButton styles={"account-button account-button_invisible link"} />
 

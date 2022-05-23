@@ -1,7 +1,7 @@
 import {useLocation} from "react-router-dom";
 import './card.css';
 import '../Link/link.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
 
@@ -12,13 +12,33 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
     const cardSaveButtonClassName = (`card__button card__button_type_save ${isLiked && 'card__button_active'}`);
     const cardDeleteButtonClassName = ('card__button card__button_type_delete');
 
+
+    useEffect(() => {
+
+        if (movie.country === null) {
+            movie.country = 'не указано';
+        }
+
+        if (movie.nameRU === null || !(/[\Wа-яА-ЯёЁ0-9\s\-?]+/g.test(movie.nameRU))) {
+            movie.nameRU = 'не указано';
+        }
+
+        if (movie.nameEN === null || !(/[\w\d\s\-?]+/gi.test(movie.nameEN))) {
+            movie.nameEN = 'not specified';
+        }
+
+        JSON.parse(localStorage.getItem('savedMovies')).forEach((savedMovie) => {
+            if (savedMovie.nameRU === movie.nameRU || savedMovie.nameEN === movie.nameEN) {
+                setIsLiked(true);
+            }
+        })
+    }, []);
+
     function handleButtonClick() {
         const movieImage = 'https://api.nomoreparties.co' + movie.image.url;
         const movieThumbnail = 'https://api.nomoreparties.co' + movie.image.formats.thumbnail.url;
 
         if (isLiked) {
-            // const savedMovie = savedMovies.filter((savedMovie) => movie.id === savedMovie.movieId)[0];
-            // поменяла savedMovies на LocalStrorage
             const savedMovie = JSON.parse(localStorage.getItem('savedMovies')).filter((savedMovie) =>
                 movie.id === savedMovie.movieId)[0];
             console.log('все сохраненные фильмы', savedMovies);
