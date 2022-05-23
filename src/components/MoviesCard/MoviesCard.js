@@ -3,7 +3,7 @@ import './card.css';
 import '../Link/link.css';
 import {useEffect, useState} from "react";
 
-function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies}) {
+function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, filteredMovies}) {
 
     const location = useLocation();
 
@@ -18,23 +18,15 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies})
         checkMovieData();
 
         if (JSON.parse(localStorage.getItem('savedMovies'))) {
-            JSON.parse(localStorage.getItem('savedMovies')).forEach((savedMovie) => {
-                if (savedMovie.nameRU === movie.nameRU || savedMovie.nameEN === movie.nameEN) {
-                    setIsLiked(true);
-                }
-            })
+            checkForLike(JSON.parse(localStorage.getItem('savedMovies')));
         }
     }, []);
 
     useEffect(() => {
         if (savedMovies) {
-            savedMovies.forEach((savedMovie) => {
-                if (savedMovie.nameRU === movie.nameRU || savedMovie.nameEN === movie.nameEN) {
-                    setIsLiked(true);
-                }
-            })
+            checkForLike(savedMovies);
         }
-    }, [savedMovies, allMovies]);
+    }, [savedMovies, allMovies, filteredMovies, movie]);
 
     function checkMovieData() {
         if (movie.country === null) {
@@ -52,6 +44,16 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies})
         if (movie.trailerLink === null ||
             !(/https?:\/\/(www)?(\.)?[0-9а-яa-zё]{1,}\.[а-яa-zё]{2}.*/.test(movie.trailerLink))) {
             movie.trailerLink = 'https://www.youtube.com/';
+        }
+    }
+
+    function checkForLike(arrayOfMovies) {
+        if (arrayOfMovies) {
+            arrayOfMovies.forEach((item) => {
+                if (item.nameRU === movie.nameRU || item.nameEN === movie.nameEN) {
+                    setIsLiked(true);
+                }
+            })
         }
     }
 

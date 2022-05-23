@@ -13,7 +13,8 @@ import Profile from "../Profile/Profile";
 
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
-import ProtectedRoute from "../ProtectedRoute";
+import ProtectedRoute from "../../utils/ProtectedRoute";
+import RedirectToMoviesIfLoggedIn from "../../utils/RedirectToMoviesIfLoggedIn";
 
 function App() {
 
@@ -185,8 +186,16 @@ function App() {
         <CurrentUserContext.Provider value={currentUser}>
             <Routes>
                 <Route index path="/" element={<Main/>}/>
-                <Route path="/signin" element={<Login onLoginUser={handleLoginUser}/>}/>
-                <Route path="/signup" element={<Register onRegisterUser={handleRegisterUser}/>}/>
+                <Route path="/signin" element={
+                    <RedirectToMoviesIfLoggedIn>
+                        <Login onLoginUser={handleLoginUser}/>
+                    </RedirectToMoviesIfLoggedIn>
+                    }/>
+                <Route path="/signup" element={
+                    <RedirectToMoviesIfLoggedIn>
+                        <Register onRegisterUser={handleRegisterUser}/>
+                    </RedirectToMoviesIfLoggedIn>
+                    }/>
                 <Route path="/movies" element={
                     <ProtectedRoute>
                         <Movies onSubmitSearch={getAllMoviesFromApi} isLoading={isLoading}

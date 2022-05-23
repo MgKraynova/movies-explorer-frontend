@@ -113,7 +113,7 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
                     arrayOfMovies.slice(0, numberOfMoviesAtPage).map((movie) => {
                         return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
                                            onSaveMovie={onSaveMovie} key={movie.id || movie.movieId} movie={movie}
-                                           allMovies={allMovies}
+                                           allMovies={allMovies} filteredMovies={filteredMovies}
                         />
                     })
                 }
