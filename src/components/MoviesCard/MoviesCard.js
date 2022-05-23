@@ -15,17 +15,7 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies})
 
     useEffect(() => {
 
-        if (movie.country === null) {
-            movie.country = 'не указано';
-        }
-
-        if (movie.nameRU === null || !(/[\Wа-яА-ЯёЁ0-9\s\-?]+/g.test(movie.nameRU))) {
-            movie.nameRU = 'не указано';
-        }
-
-        if (movie.nameEN === null || !(/[\w\d\s\-?]+/gi.test(movie.nameEN))) {
-            movie.nameEN = 'not specified';
-        }
+        checkMovieData();
 
         if (JSON.parse(localStorage.getItem('savedMovies'))) {
             JSON.parse(localStorage.getItem('savedMovies')).forEach((savedMovie) => {
@@ -46,6 +36,25 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies})
         }
     }, [savedMovies, allMovies]);
 
+    function checkMovieData() {
+        if (movie.country === null) {
+            movie.country = 'не указано';
+        }
+
+        if (movie.nameRU === null || !(/[\Wа-яА-ЯёЁ0-9\s\-?]+/g.test(movie.nameRU))) {
+            movie.nameRU = 'не указано';
+        }
+
+        if (movie.nameEN === null || !(/[\w\d\s\-?]+/gi.test(movie.nameEN))) {
+            movie.nameEN = 'not specified';
+        }
+
+        if (movie.trailerLink === null ||
+            !(/https?:\/\/(www)?(\.)?[0-9а-яa-zё]{1,}\.[а-яa-zё]{2}.*/.test(movie.trailerLink))) {
+            movie.trailerLink = 'https://www.youtube.com/';
+        }
+    }
+
     function handleButtonClick() {
         const movieImage = 'https://api.nomoreparties.co' + movie.image.url;
         const movieThumbnail = 'https://api.nomoreparties.co' + movie.image.formats.thumbnail.url;
@@ -53,12 +62,11 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies})
         if (isLiked) {
             const savedMovie = JSON.parse(localStorage.getItem('savedMovies')).filter((savedMovie) =>
                 movie.id === savedMovie.movieId)[0];
-            console.log('все сохраненные фильмы', savedMovies);
-            console.log('вычислили id охраненного фильма', savedMovie._id);
             if (savedMovie) {
                 onDeleteMovie(savedMovie._id);
             }
         } else {
+            checkMovieData();
             onSaveMovie(movie.country, movie.director, movie.duration, movie.year, movie.description, movieImage,
                 movie.trailerLink, movieThumbnail, movie.id, movie.nameRU, movie.nameEN);
         }
@@ -66,18 +74,7 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies})
     }
 
     function handleDeleteButtonClick() {
-        // const movieId = movie.movieId;
-        // const movieForDelete = savedMovies.filter((item) => {
-        //     console.log('item.movieId', item.movieId, 'movie.id', movieId);
-        //     return item.movieId = movieId;
-        // });
-
-        console.log('отобрали нужный для удаления фильм', movie);
         onDeleteMovie(movie._id);
-        // console.log('вычислили id охраненного фильма', savedMovie._id);
-        // if (savedMovie) {
-        //     onDeleteMovie(savedMovie._id);
-        // }
     }
 
     return (
