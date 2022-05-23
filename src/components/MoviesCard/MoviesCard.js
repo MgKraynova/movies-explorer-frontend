@@ -3,7 +3,7 @@ import './card.css';
 import '../Link/link.css';
 import {useEffect, useState} from "react";
 
-function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
+function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies}) {
 
     const location = useLocation();
 
@@ -27,12 +27,24 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
             movie.nameEN = 'not specified';
         }
 
-        JSON.parse(localStorage.getItem('savedMovies')).forEach((savedMovie) => {
-            if (savedMovie.nameRU === movie.nameRU || savedMovie.nameEN === movie.nameEN) {
-                setIsLiked(true);
-            }
-        })
+        if (JSON.parse(localStorage.getItem('savedMovies'))) {
+            JSON.parse(localStorage.getItem('savedMovies')).forEach((savedMovie) => {
+                if (savedMovie.nameRU === movie.nameRU || savedMovie.nameEN === movie.nameEN) {
+                    setIsLiked(true);
+                }
+            })
+        }
     }, []);
+
+    useEffect(() => {
+        if (savedMovies) {
+            savedMovies.forEach((savedMovie) => {
+                if (savedMovie.nameRU === movie.nameRU || savedMovie.nameEN === movie.nameEN) {
+                    setIsLiked(true);
+                }
+            })
+        }
+    }, [savedMovies, allMovies]);
 
     function handleButtonClick() {
         const movieImage = 'https://api.nomoreparties.co' + movie.image.url;

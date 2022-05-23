@@ -4,7 +4,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import {useEffect} from "react";
 
-function SavedMovies({getAllSavedMovies, savedMovies, onDeleteMovie}) {
+function SavedMovies({getAllSavedMovies, savedMoviesByUser, onDeleteMovie, setSavedMovies}) {
 
     useEffect(() => {
         getAllSavedMovies();
@@ -14,8 +14,8 @@ function SavedMovies({getAllSavedMovies, savedMovies, onDeleteMovie}) {
         <>
             <Header headerStyles={'header header_background_white header_type_logged-in'} navigationType={'afterLoggedInMenu'} />
             <main className="main-content">
-                <SearchForm />
-                <MoviesCardList onDeleteMovie={onDeleteMovie} savedMovies={savedMovies} />
+                <SearchForm savedMovies={savedMoviesByUser} setSavedMovies={setSavedMovies} />
+                <MoviesCardList onDeleteMovie={onDeleteMovie} savedMovies={savedMoviesByUser} />
             </main>
             <Footer />
         </>

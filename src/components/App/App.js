@@ -59,9 +59,9 @@ function App() {
         moviesApi.getAllMovies()
             .then((res) => {
                 if (res) {
-                    getAllSavedMovies();
                     localStorage.setItem('allMovies', JSON.stringify(res));
                     setAllMovies(res);
+                    getAllSavedMovies();
                 }
             })
             .catch((err) => {
@@ -82,8 +82,6 @@ function App() {
                     .then((res) => {
                         if (res.token) {
                             localStorage.setItem('token', res.token);
-                            console.log('получили ответ', res);
-                            console.log('получили токен', res.token);
                             setLoggedIn(true);
                             navigate('/movies');
                         }
@@ -94,7 +92,7 @@ function App() {
             })
             .catch((err) => {
                 handleApiError(err);
-                // todo ошибки д отображаться на стр.
+                //todo ошибки д отображаться на стр.
             })
     }
 
@@ -142,14 +140,6 @@ function App() {
             })
     }
 
-    function checkMovieData(item) {
-        if (item === null) {
-            console.log('меняем значение null в', item);
-            item = 'не указано';
-            return item;
-        }
-    }
-
     function handleSaveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
                              movieId, nameRU, nameEN) {
         mainApi.saveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
@@ -168,8 +158,6 @@ function App() {
             .then((res) => {
                 console.log('удалили movie', res);
                 getAllSavedMovies();
-                // setSavedMovies(savedMovies.filter((movie) => !(movie._id === id)));
-                // localStorage.setItem('savedMovies', JSON.stringify(savedMovies.filter((movie) => !(movie._id === id))));
             })
             .catch((err) => {
                 handleApiError(err);
@@ -203,18 +191,22 @@ function App() {
                                 isApiError={isApiError} allMovies={allMovies}
                                 onSaveMovie={handleSaveMovie} onDeleteMovie={handleDeleteMovie}
                                 setFilteredMovies={setFilteredMovies} filteredMovies={filteredMovies}
-                                />
+                        />
                     </ProtectedRoute>}/>
                 <Route path="/saved-movies" element={
                     <ProtectedRoute>
-                        <SavedMovies onDeleteMovie={handleDeleteMovie} savedMovies={savedMovies} getAllSavedMovies={getAllSavedMovies}/>
+                        <SavedMovies onDeleteMovie={handleDeleteMovie} savedMoviesByUser={savedMovies}
+                                     getAllSavedMovies={getAllSavedMovies} setSavedMovies={setSavedMovies}/>
                     </ProtectedRoute>}/>
                 <Route path="/profile" element={
                     <ProtectedRoute>
                         <Profile setIsErrorOnUpdateProfile={setIsErrorOnUpdateProfile}
                                  isErrorOnUpdateProfile={isErrorOnUpdateProfile}
                                  onUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn}
-                                 setCurrentUser={setCurrentUser} setAllMovies={setAllMovies} setSavedMovies={setSavedMovies}/>
+                                 setCurrentUser={setCurrentUser} setAllMovies={setAllMovies}
+                                 setSavedMovies={setSavedMovies}
+                                 setFilteredMovies={setFilteredMovies}
+                        />
                     </ProtectedRoute>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

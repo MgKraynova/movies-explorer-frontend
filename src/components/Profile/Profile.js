@@ -7,7 +7,7 @@ import '../Link/link.css';
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProfile, setIsErrorOnUpdateProfile, setAllMovies,
-setSavedMovies}) {
+setSavedMovies, setFilteredMovies}) {
 
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -94,6 +94,8 @@ setSavedMovies}) {
         setCurrentUser({});
         setAllMovies(null);
         setSavedMovies(null);
+        setFilteredMovies(null);
+        debugger
         localStorage.clear();
         navigate('/');
     }

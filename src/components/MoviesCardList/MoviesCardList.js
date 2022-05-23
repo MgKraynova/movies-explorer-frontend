@@ -13,7 +13,7 @@ import {
     NUMBER_OF_ADDITIONAL_MOVIES_AT_PHONES
 } from '../../utils/config';
 
-function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie, onDeleteMovie, savedMovies, filteredMovies}) {
+function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, savedMovies, filteredMovies, allMovies}) {
 
     const windowWidth = useWindowWidth();
 
@@ -22,7 +22,6 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie, onDelete
     const [content, setContent] = useState(null);
     const [numberOfMoviesAtPage, setNumberOfMoviesAtPage] = useState(12);
     const [numberOfAdditionalMovies, setNumberOfAdditionalMovies] = useState(3);
-    const [movieList, setMovieList] = useState(null);
     const [isButtonShown, setIsButtonShown] = useState(false);
 
     const notFoundMessage = (<p className="movies__text">Ничего не найдено</p>);
@@ -36,6 +35,13 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie, onDelete
 
     useEffect(() => {
         setNumberOfMoviesAtPageAndNumberOfAdditionalMovies();
+
+        if (location.pathname === '/movies' && (!(filteredMovies === undefined))) {
+            console.log('savedMovies', savedMovies);
+            setContent(<ul className="movies__list list">
+                {renderMovieCards(filteredMovies)}
+            </ul>);
+        }
     }, []);
 
     useEffect(() => {
@@ -66,29 +72,24 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie, onDelete
     }, [isApiError]);
 
     useEffect(() => {
-        if (filteredMovies && filteredMovies.length > 0) {
-            if (numberOfMoviesAtPage >= filteredMovies.length) {
-                setIsButtonShown(false);
-            } else {
-                setIsButtonShown(true);
+        if (localStorage.getItem('searchRequest')) {
+            if (filteredMovies && filteredMovies.length > 0) {
+                if (numberOfMoviesAtPage >= filteredMovies.length) {
+                    setIsButtonShown(false);
+                } else {
+                    setIsButtonShown(true);
+                }
+                console.log('filteredMovies', filteredMovies);
+
+                setContent(<ul className="movies__list list">
+                    {renderMovieCards(filteredMovies)}
+                </ul>);
+            } else if (filteredMovies && filteredMovies.length === 0) {
+                console.log('filteredMovies', filteredMovies);
+                setContent(notFoundMessage);
             }
-
-            setContent(<ul className="movies__list list">
-                {renderMovieCards(filteredMovies)}
-            </ul>);
-
-        } else if (filteredMovies && filteredMovies.length === 0) {
-            setContent(notFoundMessage);
         }
     }, [filteredMovies, numberOfMoviesAtPage]);
-
-    // useEffect(() => {
-    //     if (location.pathname === "/movies") {
-    //         if (allMovies && !filteredMovies) {
-    //             setMovieList(allMovies.slice(0, numberOfMoviesAtPage));
-    //         }
-    //     }
-    // }, [numberOfMoviesAtPage]); // todo наверное м удалить
 
     function setNumberOfMoviesAtPageAndNumberOfAdditionalMovies() {
         if (windowWidth > 1087) {
@@ -113,7 +114,9 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie, onDelete
                 {
                     arrayOfMovies.slice(0, numberOfMoviesAtPage).map((movie) => {
                         return <MoviesCard savedMovies={savedMovies} onDeleteMovie={onDeleteMovie}
-                                           onSaveMovie={onSaveMovie} key={movie.id || movie.movieId} movie={movie}/>
+                                           onSaveMovie={onSaveMovie} key={movie.id || movie.movieId} movie={movie}
+                                           allMovies={allMovies}
+                        />
                     })
                 }
             </>
@@ -123,22 +126,6 @@ function MoviesCardList({isLoading, isApiError, allMovies, onSaveMovie, onDelete
     function handleButtonClick() {
         if (location.pathname === "/movies") {
             setNumberOfMoviesAtPage(numberOfMoviesAtPage + numberOfAdditionalMovies);
-
-            if (movieList && movieList.length > 0) {
-                const movieListElement = <ul className="movies__list list">
-                    {renderMovieCards(movieList)}
-                </ul>;
-
-                setContent(movieListElement);
-
-                localStorage.setItem('movieList', JSON.stringify(movieList));
-            }
-
-            if (allMovies && numberOfMoviesAtPage > allMovies.length) {
-                setIsButtonShown(false);
-
-                localStorage.setItem('isMovieListButtonMoreShown', JSON.stringify(isButtonShown));
-            }
         }
 
         if (location.pathname === '/saved-movies') {
