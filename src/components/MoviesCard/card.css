@@ -34,6 +34,7 @@
 
 .card__title {
     font-style: normal;
+    max-width: 280px;
     font-weight: 500;
     font-size: 15px;
     line-height: 18px;
@@ -103,6 +104,10 @@
     .card__wrapper {
         gap: 0;
     }
+
+    .card__title {
+        max-width: 250px;
+    }
 }
 
 @media screen and (max-width: 426px) {
@@ -113,5 +118,9 @@
 
     .card__image {
         height: 168px;
+    }
+
+    .card__title {
+        max-width: 210px;
     }
 }
