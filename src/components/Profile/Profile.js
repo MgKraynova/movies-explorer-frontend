@@ -117,8 +117,14 @@ function Profile({
 
     function handleSubmitButtonClick(e) {
         e.preventDefault();
-        onUpdateUser(name, email);
-        setIsEditModeOn(false);
+        if (!(name === currentUser.name) || !(email === currentUser.email)) {
+            onUpdateUser(name, email);
+            setIsEditModeOn(false);
+        } else if (name === currentUser.name) {
+            setShowNameInputError(true);
+        } else if (email === currentUser.email) {
+            setShowEmailInputError(true);
+        }
     }
 
     function signOut() {

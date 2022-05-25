@@ -2,6 +2,7 @@ import {useLocation} from "react-router-dom";
 import './card.css';
 import '../Link/link.css';
 import {useEffect, useState} from "react";
+import {MOVIE_DURATION} from "../../utils/config";
 
 function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, filteredMovies}) {
 
@@ -84,7 +85,7 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, 
             <div className="card__wrapper">
                 <div className="card__text-container">
                     <h2 className="card__title">{movie.nameRU}</h2>
-                    <p className="card__text">{`${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`}</p>
+                    <p className="card__text">{MOVIE_DURATION(movie)}</p>
                 </div>
                 <button type="button" className={location.pathname === "/movies"
                     ? cardSaveButtonClassName
