@@ -2,7 +2,7 @@ import Auth from "../Auth/Auth";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-function Login({onLoginUser, setIsErrorOnLogin, isErrorOnLogin}) {
+function Login({onLoginUser, setIsErrorOnLogin, isErrorOnLogin, isLoading}) {
 
     const [email, setEmail] = useState('');
     const [emailInputValidity, setEmailInputValidity] = useState(false);
@@ -17,6 +17,14 @@ function Login({onLoginUser, setIsErrorOnLogin, isErrorOnLogin}) {
     useEffect(() => {
         setIsErrorOnLogin(false);
     }, []);
+
+    useEffect(() => {
+        if (isLoading) {
+            setIsButtonDisabled(true);
+        } else {
+            setIsButtonDisabled(false);
+        }
+    }, [isLoading]);
 
     useEffect(() => {
         if (passwordInputValidity && emailInputValidity) {
@@ -77,6 +85,7 @@ function Login({onLoginUser, setIsErrorOnLogin, isErrorOnLogin}) {
                     autoComplete="on"
                     placeholder="E-mail"
                     onChange={handleEmailInputChange}
+                    disabled={isLoading}
                 />
                 <span className="auth__input-error">{showEmailInputError ? 'Введите корректный email' : ''}</span>
             </label>
@@ -92,6 +101,7 @@ function Login({onLoginUser, setIsErrorOnLogin, isErrorOnLogin}) {
                     autoComplete="on"
                     placeholder="Пароль"
                     onChange={handlePasswordInputChange}
+                    disabled={isLoading}
                 />
                 <span className="auth__input-error">{showPasswordInputError
                     ? 'Пароль должен содержать от 2 до 12 символов'

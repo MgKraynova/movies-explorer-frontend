@@ -85,6 +85,9 @@ function App() {
     }
 
     function handleRegisterUser(name, email, password) {
+
+        setIsLoading(true);
+
         mainApi.registerNewUser(name, email, password)
             .then((res) => {
                 setCurrentUser(res);
@@ -97,17 +100,22 @@ function App() {
                             navigate('/movies');
                         }
                     })
-                    .catch((err) => {
-                        handleApiError(err);
+                    .catch(() => {
+                        setIsErrorOnRegister(true);
                     })
             })
-            .catch((err) => {
-                handleApiError(err);
+            .catch(() => {
                 setIsErrorOnRegister(true);
+            })
+            .finally(() => {
+                setIsLoading(false);
             })
     }
 
     function handleLoginUser(email, password) {
+
+        setIsLoading(true);
+
         mainApi.loginUser(email, password)
             .then((res) => {
                 if (res.token) {
@@ -116,9 +124,11 @@ function App() {
                     navigate('/movies');
                 }
             })
-            .catch((err) => {
-                handleApiError(err);
+            .catch(() => {
                 setIsErrorOnLogin(true);
+            })
+            .finally(() => {
+                setIsLoading(false);
             })
     }
 
@@ -200,13 +210,16 @@ function App() {
                 <Route index path="/" element={<Main loggedIn={loggedIn}/>}/>
                 <Route path="/signin" element={
                     <RedirectToMoviesIfLoggedIn>
-                        <Login isErrorOnLogin={isErrorOnLogin} setIsErrorOnLogin={setIsErrorOnLogin} onLoginUser={handleLoginUser}/>
+                        <Login isErrorOnLogin={isErrorOnLogin} setIsErrorOnLogin={setIsErrorOnLogin}
+                               onLoginUser={handleLoginUser} isLoading={isLoading}/>
                     </RedirectToMoviesIfLoggedIn>
                 }/>
                 <Route path="/signup" element={
                     <RedirectToMoviesIfLoggedIn>
                         <Register setIsErrorOnRegister={setIsErrorOnRegister}
-                                  isErrorOnRegister={isErrorOnRegister} onRegisterUser={handleRegisterUser}/>
+                                  isErrorOnRegister={isErrorOnRegister} onRegisterUser={handleRegisterUser}
+                                  isLoading={isLoading}
+                        />
                     </RedirectToMoviesIfLoggedIn>
                 }/>
                 <Route path="/movies" element={

@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import Auth from "../Auth/Auth";
 import {useEffect, useState} from "react";
 
-function Register({onRegisterUser, isErrorOnRegister, setIsErrorOnRegister}) {
+function Register({onRegisterUser, isErrorOnRegister, setIsErrorOnRegister, isLoading}) {
 
     const [email, setEmail] = useState('');
     const [emailInputValidity, setEmailInputValidity] = useState(false);
@@ -25,6 +25,14 @@ function Register({onRegisterUser, isErrorOnRegister, setIsErrorOnRegister}) {
     useEffect(() => {
         setIsErrorOnRegister(false);
     }, []);
+
+    useEffect(() => {
+        if (isLoading) {
+            setIsButtonDisabled(true);
+        } else {
+            setIsButtonDisabled(false);
+        }
+    }, [isLoading]);
 
     useEffect(() => {
         if (passwordInputValidity && nameInputValidity && emailInputValidity) {
@@ -96,6 +104,7 @@ function Register({onRegisterUser, isErrorOnRegister, setIsErrorOnRegister}) {
                     maxLength="15"
                     placeholder="Имя"
                     onChange={handleNameInputChange}
+                    disabled={isLoading}
                 />
                 <span className="auth__input-error">{showNameInputError
                     ? 'Имя должно содержать от 2 до 12 символов из латиницы, кириллицы, пробела или дефиса'
@@ -112,6 +121,7 @@ function Register({onRegisterUser, isErrorOnRegister, setIsErrorOnRegister}) {
                     autoComplete="on"
                     placeholder="E-mail"
                     onChange={handleEmailInputChange}
+                    disabled={isLoading}
                 />
                 <span className="auth__input-error">{showEmailInputError ? 'Введите корректный email' : ''}</span>
             </label>
@@ -127,6 +137,7 @@ function Register({onRegisterUser, isErrorOnRegister, setIsErrorOnRegister}) {
                     autoComplete="on"
                     placeholder="Пароль"
                     onChange={handlePasswordInputChange}
+                    disabled={isLoading}
                 />
                 <span className="auth__input-error">{showPasswordInputError
                     ? 'Пароль должен содержать от 2 до 12 символов'
