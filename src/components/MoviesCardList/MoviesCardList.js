@@ -44,7 +44,7 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
     }, []);
 
     useEffect(() => {
-        if (location.pathname === '/saved-movies' && savedMovies) {
+        if (location.pathname === '/saved-movies' && savedMovies && savedMovies.length > 0) {
 
             if (numberOfMoviesAtPage >= savedMovies.length) {
                 setIsButtonShown(false);
@@ -55,6 +55,9 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
             setContent(<ul className="movies__list list">
                 {renderMovieCards(savedMovies)}
             </ul>);
+        } else if (location.pathname === '/saved-movies' && savedMovies && savedMovies.length === 0) {
+            setContent(notFoundMessage);
+            setIsButtonShown(false);
         }
     }, [savedMovies, location.pathname, numberOfMoviesAtPage]);
 
