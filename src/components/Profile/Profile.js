@@ -108,7 +108,6 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
         setAllMovies(null);
         setSavedMovies(null);
         setFilteredMovies(null);
-        debugger
         localStorage.clear();
         navigate('/');
     }

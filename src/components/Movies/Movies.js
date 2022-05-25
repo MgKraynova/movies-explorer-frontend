@@ -5,7 +5,7 @@ import './main-content.css';
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 function Movies({onSubmitSearch, isLoading, isApiError, allMovies, onSaveMovie, onDeleteMovie, setFilteredMovies,
-                filteredMovies}) {
+                filteredMovies, loggedIn}) {
     return (
         <>
             <Header headerStyles={'header header_background_white header_type_logged-in'} navigationType={'afterLoggedInMenu'} />
@@ -15,7 +15,7 @@ function Movies({onSubmitSearch, isLoading, isApiError, allMovies, onSaveMovie, 
                 <MoviesCardList onDeleteMovie={onDeleteMovie}
                                 onSaveMovie={onSaveMovie} isApiError={isApiError} isLoading={isLoading}
                                 allMovies={allMovies || JSON.parse(localStorage.getItem('allMovies'))}
-                                filteredMovies={filteredMovies}
+                                filteredMovies={filteredMovies} loggedIn={loggedIn}
                 />
             </main>
             <Footer />

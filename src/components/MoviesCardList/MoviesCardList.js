@@ -13,7 +13,7 @@ import {
     NUMBER_OF_ADDITIONAL_MOVIES_AT_PHONES
 } from '../../utils/config';
 
-function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, savedMovies, filteredMovies, allMovies}) {
+function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, savedMovies, filteredMovies, allMovies, loggedIn}) {
 
     const windowWidth = useWindowWidth();
 
@@ -44,6 +44,12 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
     }, []);
 
     useEffect(() => {
+        if (!loggedIn) {
+            setContent(null);
+        }
+    }, [loggedIn])
+
+    useEffect(() => {
         if (location.pathname === '/saved-movies' && savedMovies && savedMovies.length > 0) {
 
             if (numberOfMoviesAtPage >= savedMovies.length) {
@@ -70,6 +76,9 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
     useEffect(() => {
         if (isApiError) {
             setContent(apiErrorMessage);
+            setIsButtonShown(false);
+        } else {
+            setContent(null);
         }
     }, [isApiError]);
 

@@ -150,7 +150,8 @@ function App() {
         mainApi.saveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
             movieId, nameRU, nameEN)
             .then((res) => {
-                getAllSavedMovies();
+                setSavedMovies([...savedMovies, res]);
+                localStorage.setItem('savedMovies', JSON.stringify([...savedMovies, res]));
             })
             .catch((err) => {
                 handleApiError(err);
@@ -204,6 +205,7 @@ function App() {
                                 isApiError={isApiError} allMovies={allMovies}
                                 onSaveMovie={handleSaveMovie} onDeleteMovie={handleDeleteMovie}
                                 setFilteredMovies={setFilteredMovies} filteredMovies={filteredMovies}
+                                loggedIn={loggedIn}
                         />
                     </ProtectedRoute>}/>
                 <Route path="/saved-movies" element={
