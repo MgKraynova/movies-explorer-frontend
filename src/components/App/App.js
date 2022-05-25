@@ -16,14 +16,17 @@ import mainApi from "../../utils/MainApi";
 
 import ProtectedRoute from "../../utils/ProtectedRoute";
 import RedirectToMoviesIfLoggedIn from "../../utils/RedirectToMoviesIfLoggedIn";
+import Popup from "../Popup/Popup";
 
 function App() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [isApiError, setIsApiError] = useState(false);
+
     const [allMovies, setAllMovies] = useState(null);
     const [savedMovies, setSavedMovies] = useState(null);
     const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || null);
+
     const [currentUser, setCurrentUser] = useState({});
     const [loggedIn, setLoggedIn] = useState(false);
 
@@ -32,6 +35,9 @@ function App() {
 
     const [isErrorOnLogin, setIsErrorOnLogin] = useState(false);
     const [isErrorOnRegister, setIsErrorOnRegister] = useState(false);
+
+    const [isDeleteMoviePopupOpen, setIsDeleteMoviePopupOpen] = useState(false);
+    const [isSaveMoviePopupOpen, setIsSaveMoviePopupOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -153,8 +159,8 @@ function App() {
                 setSavedMovies([...savedMovies, res]);
                 localStorage.setItem('savedMovies', JSON.stringify([...savedMovies, res]));
             })
-            .catch((err) => {
-                handleApiError(err);
+            .catch(() => {
+                setIsSaveMoviePopupOpen(true);
             })
     }
 
@@ -164,8 +170,8 @@ function App() {
                 setSavedMovies(savedMovies.filter((movie) => !(movie._id === res._id)));
                 localStorage.setItem('savedMovies', JSON.stringify(savedMovies.filter((movie) => !(movie._id === res._id))));
             })
-            .catch((err) => {
-                handleApiError(err);
+            .catch(() => {
+                setIsDeleteMoviePopupOpen(true);
             })
     }
 
@@ -183,6 +189,10 @@ function App() {
             })
     }
 
+    function closePopups() {
+        setIsDeleteMoviePopupOpen(false);
+        setIsSaveMoviePopupOpen(false);
+    }
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
@@ -227,6 +237,9 @@ function App() {
                     </ProtectedRoute>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
+
+            <Popup isOpen={isSaveMoviePopupOpen} type={'save'} onClose={closePopups}/>
+            <Popup isOpen={isDeleteMoviePopupOpen} type={'delete'} onClose={closePopups}/>
         </CurrentUserContext.Provider>
     )
 
