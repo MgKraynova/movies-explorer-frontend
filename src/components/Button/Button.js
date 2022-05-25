@@ -1,11 +1,13 @@
 import './button.css';
 
-function Button({ButtonText, buttonSize}) {
+function Button({ButtonText, buttonSize, isButtonDisabled}) {
 
-    const buttonStyles = buttonSize === 'big' ? 'button button_size_big' : 'button button_size_small';
+    const buttonStyles = (`button 
+    ${buttonSize === 'big' ? 'button_size_big' : 'button_size_small'}
+    ${isButtonDisabled && 'button_disabled'}`);
 
     return (
-        <button type="submit" className={buttonStyles}>{ButtonText}</button>
+        <button disabled={isButtonDisabled} type="submit" className={buttonStyles}>{ButtonText}</button>
     )
 }
 

@@ -137,6 +137,17 @@
     color: #3456F3;
 }
 
+.auth__error {
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    text-align: center;
+    color: #FF3055;
+}
+
 @media screen and (max-width: 769px) {
     .auth {
         padding-top: 232px;

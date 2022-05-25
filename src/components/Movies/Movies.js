@@ -4,13 +4,19 @@ import SearchForm from "../SearchForm/SearchForm";
 import './main-content.css';
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function Movies() {
+function Movies({onSubmitSearch, isLoading, isApiError, allMovies, onSaveMovie, onDeleteMovie, setFilteredMovies,
+                filteredMovies, loggedIn}) {
     return (
         <>
             <Header headerStyles={'header header_background_white header_type_logged-in'} navigationType={'afterLoggedInMenu'} />
             <main className="main-content">
-                <SearchForm />
-                <MoviesCardList />
+                <SearchForm allMovies={allMovies} isLoading={isLoading} onSubmitSearch={onSubmitSearch}
+                            setFilteredMovies={setFilteredMovies}/>
+                <MoviesCardList onDeleteMovie={onDeleteMovie}
+                                onSaveMovie={onSaveMovie} isApiError={isApiError} isLoading={isLoading}
+                                allMovies={allMovies || JSON.parse(localStorage.getItem('allMovies'))}
+                                filteredMovies={filteredMovies} loggedIn={loggedIn}
+                />
             </main>
             <Footer />
         </>

@@ -37,6 +37,7 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #E8E8E8;
+    position: relative;
 }
 
 .profile__label:last-of-type {
@@ -117,6 +118,35 @@
     text-align: center;
     color: #FF004C;
     margin: 0;
+}
+
+.profile__input-error {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #FF3055;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    /*padding-top: 5px;*/
+}
+
+.profile__text {
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+    align-items: center;
+    text-align: center;
+    color: #FF3055;
+    display: none;
+}
+
+.profile__text_visible {
+    display: block;
 }
 
 @media screen and (max-width: 769px) {

@@ -6,7 +6,7 @@ import './burger.css';
 import './burger-icon.css';
 import './burger-menu.css';
 
-function Navigation({type}) {
+function Navigation({type, loggedIn}) {
 
     const [isBurgerMenuOpened, setIsBurgerMenuOpened] = useState(false);
 
@@ -19,11 +19,14 @@ function Navigation({type}) {
 
     const AfterLoggedInMenu = <nav className="navigation__logged-menu">
         <div className="navigation__wrapper">
-            <NavLink className="navigation__link navigation__link_type_active link"
+            <NavLink className={`navigation__link link ${loggedIn && 'navigation__link_color_white'}
+            ${location.pathname === '/movies' && 'navigation__link_type_active'}`}
                      to="/movies">Фильмы</NavLink>
-            <NavLink className="navigation__link link" to="/saved-movies">Сохраненные фильмы</NavLink>
+            <NavLink className={`navigation__link link ${loggedIn && 'navigation__link_color_white'}
+            ${location.pathname === '/saved-movies' && 'navigation__link_type_active'}`} to="/saved-movies">Сохраненные
+                фильмы</NavLink>
         </div>
-        <AccountButton styles={"account-button account-button_invisible link"} />
+        <AccountButton styles={"account-button account-button_invisible link"}/>
 
         <div className="burger">
             <div className="burger-icon" onClick={handleBurgerIconClick}>
@@ -43,8 +46,8 @@ function Navigation({type}) {
                 <ul className="burger-menu__list list">
                     <li>
                         <NavLink className={location.pathname === "/"
-                        ? "burger-menu__link link burger-menu__link_active"
-                        : "burger-menu__link link"} to="/">Главная</NavLink>
+                            ? "burger-menu__link link burger-menu__link_active"
+                            : "burger-menu__link link"} to="/">Главная</NavLink>
                     </li>
                     <li>
                         <NavLink className={location.pathname === "/movies"
@@ -57,7 +60,7 @@ function Navigation({type}) {
                             : "burger-menu__link link"} to="/saved-movies">Сохранённые фильмы</NavLink>
                     </li>
                 </ul>
-                <AccountButton styles={"account-button link"} />
+                <AccountButton styles={"account-button link"}/>
             </nav>
         </div>
     </nav>
