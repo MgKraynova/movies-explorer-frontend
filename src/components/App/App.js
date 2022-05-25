@@ -148,6 +148,9 @@ function App() {
     }
 
     function handleUpdateUser(name, email) {
+
+        setIsLoading(true);
+
         mainApi.updateUserInfo(name, email)
             .then((res) => {
                 setCurrentUser(res);
@@ -157,6 +160,7 @@ function App() {
                 handleApiError(err);
             })
             .finally(() => {
+                setIsLoading(false);
                 setIsSuccessOnUpdateProfile(true);
             })
     }
@@ -246,6 +250,7 @@ function App() {
                                  isSuccessOnUpdateProfile={isSuccessOnUpdateProfile}
                                  setIsSuccessOnUpdateProfile={setIsSuccessOnUpdateProfile}
                                  setIsErrorOnUpdateProfile={setIsErrorOnUpdateProfile}
+                                 isLoading={isLoading}
                         />
                     </ProtectedRoute>}/>
                 <Route path="*" element={<NotFound/>}/>

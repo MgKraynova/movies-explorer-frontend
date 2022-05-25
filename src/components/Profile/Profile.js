@@ -6,8 +6,19 @@ import Button from "../Button/Button";
 import '../Link/link.css';
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProfile, setAllMovies,
-setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdateProfile, setIsErrorOnUpdateProfile}) {
+function Profile({
+                     setLoggedIn,
+                     setCurrentUser,
+                     onUpdateUser,
+                     isErrorOnUpdateProfile,
+                     setAllMovies,
+                     setSavedMovies,
+                     setFilteredMovies,
+                     isSuccessOnUpdateProfile,
+                     setIsSuccessOnUpdateProfile,
+                     setIsErrorOnUpdateProfile,
+                     isLoading
+                 }) {
 
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -44,6 +55,14 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
         setName(currentUser.name || '');
         setEmail(currentUser.email || '');
     }, [currentUser]);
+
+    useEffect(() => {
+        if (isLoading) {
+            setIsButtonDisabled(true);
+        } else {
+            setIsButtonDisabled(false);
+        }
+    }, [isLoading]);
 
     useEffect(() => {
 
@@ -115,13 +134,16 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
     const profileLinks = (<>
         <p className={`profile__text ${isDataUserChanged && 'profile__text_visible'}`}>Данные успешно изменены</p>
         <button onClick={handleEditButton} type="button"
-                                           className="profile__link profile__link_type_ordinary">Редактировать</button>
-        <Link to="/" type="button" onClick={signOut} className="profile__link link profile__link_type_stressed">Выйти из аккаунта</Link>
+                className="profile__link profile__link_type_ordinary">Редактировать
+        </button>
+        <Link to="/" type="button" onClick={signOut} className="profile__link link profile__link_type_stressed">Выйти из
+            аккаунта</Link>
     </>)
 
 
-    const profileButton = (<><span className="profile__error">{isApiErrorShown && 'При обновлении профиля произошла ошибка. Попробуйте еще раз'}</span>
-        <Button isButtonDisabled={isButtonDisabled} ButtonText={'Сохранить'} buttonSize={'big'} />
+    const profileButton = (<><span
+        className="profile__error">{isApiErrorShown && 'При обновлении профиля произошла ошибка. Попробуйте еще раз'}</span>
+        <Button isButtonDisabled={isButtonDisabled} ButtonText={'Сохранить'} buttonSize={'big'}/>
     </>)
 
     return (
@@ -130,7 +152,7 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
                     navigationType={'afterLoggedInMenu'}/>
             <main className="profile">
                 <h1 className="profile__title">Привет, {currentUser.name}</h1>
-                <form className="profile__form" onSubmit={handleSubmitButtonClick} >
+                <form className="profile__form" onSubmit={handleSubmitButtonClick}>
                     <fieldset className="profile__fieldset">
                         <label className="profile__label">
                             <p className="profile__input-caption">Имя</p>
@@ -144,7 +166,7 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
                                 minLength="2"
                                 maxLength="15"
                                 value={name}
-                                disabled={!isEditModeOn}
+                                disabled={!isEditModeOn || isLoading}
                                 onChange={handleNameInputChange}
                             />
                             <span className="profile__input-error">{showNameInputError
@@ -162,10 +184,11 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
                                 pattern="[0-9a-zA-Z_\\-\\]+@[0-9a-zA-Z_\\-\\]+\.[a-zA-Z]+"
                                 minLength="2"
                                 value={email}
-                                disabled={!isEditModeOn}
+                                disabled={!isEditModeOn || isLoading}
                                 onChange={handleEmailInputChange}
                             />
-                            <span className="profile__input-error">{showEmailInputError ? emailInputErrorText : ''}</span>
+                            <span
+                                className="profile__input-error">{showEmailInputError ? emailInputErrorText : ''}</span>
                         </label>
                     </fieldset>
 
