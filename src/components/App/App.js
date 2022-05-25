@@ -160,7 +160,8 @@ function App() {
     function handleDeleteMovie(id) {
         mainApi.deleteMovie(id)
             .then((res) => {
-                getAllSavedMovies();
+                setSavedMovies(savedMovies.filter((movie) => !(movie._id === res._id)));
+                localStorage.setItem('savedMovies', JSON.stringify(savedMovies.filter((movie) => !(movie._id === res._id))));
             })
             .catch((err) => {
                 handleApiError(err);
