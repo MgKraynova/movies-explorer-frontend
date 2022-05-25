@@ -238,7 +238,8 @@ function App() {
                 <Route path="/saved-movies" element={
                     <ProtectedRoute>
                         <SavedMovies onDeleteMovie={handleDeleteMovie} savedMoviesByUser={savedMovies}
-                                     getAllSavedMovies={getAllSavedMovies} setSavedMovies={setSavedMovies}/>
+                                     getAllSavedMovies={getAllSavedMovies} setSavedMovies={setSavedMovies}
+                                     isLoading={isLoading}/>
                     </ProtectedRoute>}/>
                 <Route path="/profile" element={
                     <ProtectedRoute>
