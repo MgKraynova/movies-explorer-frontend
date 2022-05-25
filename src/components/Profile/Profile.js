@@ -6,19 +6,19 @@ import Button from "../Button/Button";
 import '../Link/link.css';
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProfile, setIsErrorOnUpdateProfile, setAllMovies,
-setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdateProfile}) {
+function Profile({setLoggedIn, setCurrentUser, onUpdateUser, isErrorOnUpdateProfile, setAllMovies,
+setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdateProfile, setIsErrorOnUpdateProfile}) {
 
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [isApiErrorShown, setIsApiErrorShown] = useState(false);
 
     const [email, setEmail] = useState('');
-    const [emailInputValidity, setEmailInputValidity] = useState(false);
+    const [emailInputValidity, setEmailInputValidity] = useState(true);
     const [showEmailInputError, setShowEmailInputError] = useState(false);
 
     const [name, setName] = useState('');
-    const [nameInputValidity, setNameInputValidity] = useState(false);
+    const [nameInputValidity, setNameInputValidity] = useState(true);
     const [showNameInputError, setShowNameInputError] = useState(false);
 
     const [isDataUserChanged, setIsUserDataChanged] = useState(false);
@@ -43,7 +43,6 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
     useEffect(() => {
         setName(currentUser.name || '');
         setEmail(currentUser.email || '');
-
     }, [currentUser]);
 
     useEffect(() => {
@@ -58,13 +57,15 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
     }, [isErrorOnUpdateProfile]);
 
     useEffect(() => {
-        if (nameInputValidity && emailInputValidity && !(name === currentUser.name) && !(email === currentUser.email)) {
+        if (nameInputValidity && emailInputValidity &&
+            (!(name === currentUser.name) || !(email === currentUser.email))) {
             setIsButtonDisabled(false);
         } else {
             setIsButtonDisabled(true);
         }
 
         setIsSuccessOnUpdateProfile(false);
+        setIsErrorOnUpdateProfile(false);
     }, [email, name]);
 
     function handleNameInputChange(event) {
@@ -72,7 +73,7 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
         setName(event.target.value);
         setNameInputValidity(event.target.validity.valid);
 
-        if (!event.target.validity.valid || currentUser.name === event.target.value) {
+        if (!event.target.validity.valid) {
             setShowNameInputError(true);
         } else {
             setShowNameInputError(false);
@@ -84,7 +85,7 @@ setSavedMovies, setFilteredMovies, isSuccessOnUpdateProfile, setIsSuccessOnUpdat
         setEmail(event.target.value);
         setEmailInputValidity(event.target.validity.valid);
 
-        if (!event.target.validity.valid || currentUser.email === event.target.value) {
+        if (!event.target.validity.valid) {
             setShowEmailInputError(true);
         } else {
             setShowEmailInputError(false);

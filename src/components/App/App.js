@@ -212,14 +212,14 @@ function App() {
                     </ProtectedRoute>}/>
                 <Route path="/profile" element={
                     <ProtectedRoute>
-                        <Profile setIsErrorOnUpdateProfile={setIsErrorOnUpdateProfile}
-                                 isErrorOnUpdateProfile={isErrorOnUpdateProfile}
+                        <Profile isErrorOnUpdateProfile={isErrorOnUpdateProfile}
                                  onUpdateUser={handleUpdateUser} setLoggedIn={setLoggedIn}
                                  setCurrentUser={setCurrentUser} setAllMovies={setAllMovies}
                                  setSavedMovies={setSavedMovies}
                                  setFilteredMovies={setFilteredMovies}
                                  isSuccessOnUpdateProfile={isSuccessOnUpdateProfile}
                                  setIsSuccessOnUpdateProfile={setIsSuccessOnUpdateProfile}
+                                 setIsErrorOnUpdateProfile={setIsErrorOnUpdateProfile}
                         />
                     </ProtectedRoute>}/>
                 <Route path="*" element={<NotFound/>}/>
